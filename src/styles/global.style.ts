@@ -2,11 +2,13 @@ import { css } from '@emotion/react'
 import { bp, Breakpoint } from '@/styles/breakpoints.mixin'
 
 const googleFonts = css`
-  @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400&display=swap');
+  @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400&family=Lobster&display=swap');
 `
 
 const palette = css`
   :root {
+    --color-back: rgb(255, 255, 255);
+    --color-text: rgb(0, 0, 0);
   }
 `
 
