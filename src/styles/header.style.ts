@@ -8,9 +8,22 @@ const header = css`
   align-items: center;
   width: 100%;
   height: 4.5rem;
-  background-color: var(--color-primary);
-  border-bottom: 0.25rem solid var(--color-primary-light);
-  transition: opacity ease-in-out 0.3s;
+  border-bottom-width: 1px;
+  border-bottom-style: solid;
+  border-bottom-color: var(--color-back);
+  background-color: var(--color-back);
+  transition: height ease-in-out 0.3s, border ease-in-out 0.3s;
+`
+
+const isScrolled = css`
+  height: 4rem;
+  border-bottom-color: var(--color-gray-light);
+`
+
+const headerInner = css`
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
 `
 
 const headerTitle = css`
@@ -26,6 +39,8 @@ const spacer = css`
 
 const styles = {
   header,
+  isScrolled,
+  headerInner,
   headerTitle,
   spacer,
 }
