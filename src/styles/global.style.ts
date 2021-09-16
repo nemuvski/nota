@@ -62,6 +62,12 @@ export default css(
     button {
       cursor: pointer;
       outline: none;
+      border: 0;
+    }
+
+    a {
+      color: var(--color-text);
+      text-decoration: none;
     }
   `
 )

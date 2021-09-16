@@ -1,13 +1,20 @@
 import React from 'react'
+import { NextSeo } from 'next-seo'
 import Header from '@/components/Header'
 import InnerContainer from '@/components/InnerContainer'
 import Styles from '@/styles/layout.style'
 
-const Layout: React.FC = ({ children }) => {
+type Props = {
+  title?: string
+}
+
+const Layout: React.FC<Props> = ({ title, children }) => {
   return (
     <div>
+      <NextSeo title={title} />
+
       <Header />
-      <main>
+      <main css={Styles.main}>
         <InnerContainer>{children}</InnerContainer>
       </main>
       <footer css={Styles.footer}>

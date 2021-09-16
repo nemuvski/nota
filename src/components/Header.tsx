@@ -1,10 +1,11 @@
 import React from 'react'
+import Link from 'next/link'
 import Styles from '@/styles/header.style'
 import InnerContainer from '@/components/InnerContainer'
 import { useScrollOver } from '@/hooks/useScrollOver'
-import HeaderAction from '@/components/HeaderAction'
+import HeaderNavigation from '@/components/HeaderNavigation'
 
-const SCROLL_THRESHOLD_Y = 40
+const SCROLL_THRESHOLD_Y = 80
 
 const Header: React.FC = () => {
   const isScrollOver = useScrollOver(SCROLL_THRESHOLD_Y)
@@ -12,10 +13,14 @@ const Header: React.FC = () => {
   return (
     <>
       <header css={[Styles.header, isScrollOver && Styles.isScrolled]}>
-        <InnerContainer isWide={!isScrollOver}>
+        <InnerContainer size='large'>
           <div css={Styles.headerInner}>
-            <h1 css={Styles.headerTitle}>Nota</h1>
-            <HeaderAction />
+            <Link href='/'>
+              <a>
+                <h1 css={Styles.headerTitle}>Nota</h1>
+              </a>
+            </Link>
+            <HeaderNavigation />
           </div>
         </InnerContainer>
       </header>

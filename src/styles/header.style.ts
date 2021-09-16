@@ -12,11 +12,13 @@ const header = css`
   border-bottom-style: solid;
   border-bottom-color: var(--color-back);
   background-color: var(--color-back);
-  transition: height ease-in-out 0.3s, border ease-in-out 0.3s;
+  transition-property: height, border;
+  transition-timing-function: ease-in-out;
+  transition-duration: 0.5s;
 `
 
 const isScrolled = css`
-  height: 4rem;
+  height: 3.75rem;
   border-bottom-color: var(--color-gray-light);
 `
 
