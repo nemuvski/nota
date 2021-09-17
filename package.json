@@ -13,6 +13,7 @@
   "dependencies": {
     "@emotion/react": "^11.4.1",
     "@emotion/styled": "^11.3.0",
+    "firebase": "^9.0.2",
     "modern-css-reset": "^1.4.0",
     "next": "11.1.2",
     "next-seo": "^4.27.0",
