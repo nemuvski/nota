@@ -1,6 +1,7 @@
 import React from 'react'
-import Styles from '@/styles/header-navigation.style'
 import { useRouter } from 'next/router'
+import Styles from '@/styles/header-navigation.style'
+import Button from '@/styles/button.component'
 
 const HeaderNavigation = () => {
   const router = useRouter()
@@ -9,14 +10,14 @@ const HeaderNavigation = () => {
     <nav css={Styles.root}>
       <ul>
         <li>
-          <button type='button' onClick={() => router.push('/login')}>
+          <Button type='button' onClick={() => router.push('/login')}>
             Log in
-          </button>
+          </Button>
         </li>
         <li>
-          <button type='button' onClick={() => router.push('/signup')}>
+          <Button color='primary' type='button' onClick={() => router.push('/signup')}>
             Sign up
-          </button>
+          </Button>
         </li>
       </ul>
     </nav>

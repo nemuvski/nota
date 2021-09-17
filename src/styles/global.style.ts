@@ -8,15 +8,16 @@ const googleFonts = css`
 const palette = css`
   :root {
     --color-back: rgb(255, 255, 255);
-    --color-text: rgb(35, 30, 35);
-    --color-gray-main: rgb(220, 220, 220);
-    --color-gray-light: rgb(235, 235, 235);
-    --color-primary-dark: rgb(51, 149, 146);
-    --color-primary-main: rgb(57, 166, 163);
-    --color-primary-light: rgb(222, 238, 234);
-    --color-secondary-dark: rgb(171, 17, 89);
-    --color-secondary-main: rgb(191, 19, 99);
-    --color-secondary-light: rgb(238, 207, 221);
+    --color-text: rgb(0, 0, 0);
+    --color-gray-dark: rgb(210, 210, 210);
+    --color-gray-main: rgb(238, 238, 238);
+    --color-gray-light: rgb(248, 248, 248);
+    --color-primary-dark: rgb(67, 170, 170);
+    --color-primary-main: rgb(75, 189, 189);
+    --color-primary-light: rgb(201, 235, 235);
+    --color-secondary-dark: rgb(170, 67, 67);
+    --color-secondary-main: rgb(189, 75, 75);
+    --color-secondary-light: rgb(239, 183, 183);
   }
 `
 
@@ -55,7 +56,7 @@ export default css(
       appearance: none;
       &:disabled {
         cursor: not-allowed;
-        opacity: 0.7;
+        opacity: 0.8;
       }
     }
 
