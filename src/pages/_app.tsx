@@ -1,11 +1,22 @@
 import type { AppProps } from 'next/app'
 import { DefaultSeo } from 'next-seo'
 import { Global } from '@emotion/react'
+import { Provider } from 'react-redux'
+import { store } from '@/stores/store'
 import Styles from '@/styles/global.style'
 
 import 'modern-css-reset'
+import { useAuthStateChanged } from '@/hooks/useAuthStateChanged'
 
-const App = ({ Component, pageProps }: AppProps) => {
+const NotaApp = ({ Component, pageProps }: AppProps) => {
+  /**
+   * ルートコンポーネント
+   */
+  const RootComponent = () => {
+    useAuthStateChanged()
+    return <Component {...pageProps} />
+  }
+
   return (
     <>
       <DefaultSeo
@@ -24,12 +35,12 @@ const App = ({ Component, pageProps }: AppProps) => {
           },
         ]}
       />
-
       <Global styles={Styles} />
-
-      <Component {...pageProps} />
+      <Provider store={store}>
+        <RootComponent />
+      </Provider>
     </>
   )
 }
 
-export default App
+export default NotaApp
