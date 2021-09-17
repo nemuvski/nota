@@ -3,7 +3,6 @@ import { css } from '@emotion/react'
 const header = css`
   position: fixed;
   z-index: 10;
-  overflow-y: hidden;
   display: flex;
   align-items: center;
   width: 100%;
@@ -14,7 +13,7 @@ const header = css`
   background-color: var(--color-back);
   transition-property: height, border;
   transition-timing-function: ease-in-out;
-  transition-duration: 0.5s;
+  transition-duration: 0.3s;
 `
 
 const isScrolled = css`
@@ -36,7 +35,6 @@ const headerTitle = css`
 
 const spacer = css`
   height: 4.5rem;
-  margin-bottom: 1.5rem;
 `
 
 const styles = {
