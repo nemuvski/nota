@@ -10,8 +10,8 @@ const Button = styled.button<Props>(
     display: inline-flex;
     align-items: center;
     justify-content: center;
-    min-width: 5rem;
-    min-height: 2rem;
+    min-width: 5.5rem;
+    min-height: 2.25rem;
     padding: 0.25rem 0.5rem;
     border-radius: 0.3rem;
   `,
