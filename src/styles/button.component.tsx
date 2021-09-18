@@ -33,7 +33,7 @@ const Button = styled.button<Props>(
     return css`
       background-color: ${bgColor};
       color: ${textColor};
-      &:hover {
+      &:not(:disabled):hover {
         background-color: ${hoverBgColor};
       }
     `
