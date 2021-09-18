@@ -1,8 +1,4 @@
 module.exports = {
-  "extends": [
-    "next",
-    "next/core-web-vitals",
-    "prettier"
-  ],
-  "rules": {}
+  extends: ['next', 'next/core-web-vitals', 'prettier'],
+  rules: {},
 }
