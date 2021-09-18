@@ -7,8 +7,8 @@
     "build": "next build",
     "start": "next start",
     "lint": "next lint --dir src",
-    "format": "prettier --check --ignore-path .gitignore './**/*.{js,jsx,ts,tsx,json}'",
-    "format:fix": "prettier --write --ignore-path .gitignore './**/*.{js,jsx,ts,tsx,json}'"
+    "format": "prettier --check --ignore-path .gitignore './**/*.{js,jsx,ts,tsx}'",
+    "format:fix": "prettier --write --ignore-path .gitignore './**/*.{js,jsx,ts,tsx}'"
   },
   "dependencies": {
     "@emotion/react": "^11.4.1",
