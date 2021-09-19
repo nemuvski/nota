@@ -10,7 +10,7 @@ type Props = {
 
 const Layout: React.FC<Props> = ({ title, children }) => {
   return (
-    <div>
+    <>
       <NextSeo title={title} />
 
       <Header />
@@ -20,7 +20,7 @@ const Layout: React.FC<Props> = ({ title, children }) => {
       <footer css={Styles.footer}>
         <small>© 2021 Nota</small>
       </footer>
-    </div>
+    </>
   )
 }
 
