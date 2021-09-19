@@ -25,6 +25,13 @@ const headerInner = css`
   display: flex;
   align-items: center;
   justify-content: space-between;
+
+  a {
+    color: var(--color-text);
+    &:hover {
+      text-decoration: none;
+    }
+  }
 `
 
 const headerTitle = css`

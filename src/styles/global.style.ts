@@ -81,14 +81,23 @@ export default css(
     }
 
     a {
-      color: var(--color-text);
+      color: var(--color-secondary-main);
       text-decoration: none;
+
+      &:hover {
+        text-decoration: underline;
+      }
     }
 
     svg {
       width: 100%;
       height: auto;
       vertical-align: middle;
+    }
+
+    p {
+      margin: 1rem 0;
+      line-height: 1.8;
     }
   `
 )

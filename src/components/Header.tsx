@@ -14,11 +14,11 @@ const Header: React.FC = () => {
       <header css={[Styles.header, isScrollOver && Styles.isScrolled]}>
         <InnerContainer size='large'>
           <div css={Styles.headerInner}>
-            <Link href='/'>
-              <a>
-                <h1 css={Styles.headerTitle}>Nota</h1>
-              </a>
-            </Link>
+            <h1 css={Styles.headerTitle}>
+              <Link href='/'>
+                <a>Nota</a>
+              </Link>
+            </h1>
             <HeaderNavigation />
           </div>
         </InnerContainer>
