@@ -1,10 +1,12 @@
-import React from 'react'
+import React, { useState } from 'react'
 import { Controller, useForm } from 'react-hook-form'
 import Styles from '@/styles/email-and-password-form.style'
 import Button from '@/styles/button.component'
 import { MIN_LENGTH_PASSWORD } from '@/constants/form'
 import InputText from '@/styles/input-text.component'
 import InputPassword from '@/components/InputPassword'
+import Message from '@/components/Message'
+import { logIn, signUp } from '@/infrastructure/authentication'
 
 type Props = {
   isSignUpMode?: boolean
@@ -16,6 +18,8 @@ type FormFields = {
 }
 
 const EmailAndPasswordForm: React.FC<Props> = ({ isSignUpMode = false }) => {
+  const [errorMessage, setErrorMessage] = useState<string | null>(null)
+
   const {
     control,
     register,
@@ -30,13 +34,25 @@ const EmailAndPasswordForm: React.FC<Props> = ({ isSignUpMode = false }) => {
     },
   })
 
-  const submit = (formFields: FormFields) => {
-    // TODO: ログイン、または新規登録の処理にする
-    console.log(formFields)
+  /**
+   * ボタン押下イベント
+   *
+   * @param formFields
+   */
+  const submit = async (formFields: FormFields) => {
+    const { email, password } = formFields
+    try {
+      setErrorMessage(null)
+      isSignUpMode ? await signUp(email, password) : await logIn(email, password)
+    } catch (error: any) {
+      setErrorMessage(error.message)
+    }
   }
 
   return (
     <form css={Styles.root} onSubmit={handleSubmit(submit)}>
+      {errorMessage && <Message level='error'>{errorMessage}</Message>}
+
       <div css={Styles.field}>
         <label css={Styles.fieldLabel}>Email</label>
         <InputText

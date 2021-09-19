@@ -18,6 +18,18 @@ const palette = css`
     --color-secondary-dark: rgb(170, 67, 67);
     --color-secondary-main: rgb(189, 75, 75);
     --color-secondary-light: rgb(239, 183, 183);
+    --color-success-dark: rgb(30, 71, 32);
+    --color-success-main: rgb(93, 182, 97);
+    --color-success-light: rgb(237, 247, 237);
+    --color-info-dark: rgb(0, 67, 97);
+    --color-info-main: rgb(38, 178, 245);
+    --color-info-light: rgb(230, 246, 253);
+    --color-warning-dark: rgb(102, 60, 0);
+    --color-warning-main: rgb(255, 162, 41);
+    --color-warning-light: rgb(255, 244, 229);
+    --color-error-dark: rgb(95, 34, 33);
+    --color-error-main: rgb(241, 100, 97);
+    --color-error-light: rgb(253, 237, 237);
   }
 `
 

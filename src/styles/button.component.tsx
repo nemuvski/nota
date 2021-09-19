@@ -2,7 +2,7 @@ import { css } from '@emotion/react'
 import styled from '@emotion/styled'
 
 type Props = {
-  color?: 'primary' | 'secondary'
+  color?: Color
 }
 
 const Button = styled.button<Props>(
