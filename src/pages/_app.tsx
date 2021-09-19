@@ -4,6 +4,7 @@ import { Global } from '@emotion/react'
 import { Provider } from 'react-redux'
 import { store } from '@/stores/store'
 import { useAuthStateChanged } from '@/hooks/auth'
+import Loading from '@/components/Loading'
 import Styles from '@/styles/global.style'
 
 import 'modern-css-reset'
@@ -13,8 +14,13 @@ const NotaApp = ({ Component, pageProps }: AppProps) => {
    * ルートコンポーネント
    */
   const RootComponent = () => {
-    useAuthStateChanged()
-    return <Component {...pageProps} />
+    const isProcessing = useAuthStateChanged()
+    return (
+      <>
+        {isProcessing && <Loading />}
+        <Component {...pageProps} />
+      </>
+    )
   }
 
   return (

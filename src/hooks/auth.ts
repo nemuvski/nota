@@ -1,4 +1,4 @@
-import { useEffect } from 'react'
+import { useEffect, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { onAuthStateChanged } from 'firebase/auth'
 import { firebaseAuth } from '@/libs/firebase'
@@ -11,12 +11,22 @@ import { selectAuth } from '@/stores/auth/selector'
  */
 export const useAuthStateChanged = () => {
   const dispatch = useDispatch()
+  const [isProcessing, setIsProcessing] = useState(true)
+
   useEffect(() => {
-    const unsubscribe = onAuthStateChanged(firebaseAuth, (user) => {
-      dispatch(setAuth({ user: user ? buildAuthUser(user) : null }))
-    })
+    const unsubscribe = onAuthStateChanged(
+      firebaseAuth,
+      (user) => {
+        setIsProcessing(true)
+        dispatch(setAuth({ user: user ? buildAuthUser(user) : null }))
+        setIsProcessing(false)
+      },
+      (error) => console.error(error)
+    )
     return () => unsubscribe()
   }, [dispatch])
+
+  return isProcessing
 }
 
 /**
