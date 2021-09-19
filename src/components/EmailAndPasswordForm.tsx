@@ -6,7 +6,7 @@ import { MIN_LENGTH_PASSWORD } from '@/constants/form'
 import InputText from '@/styles/input-text.component'
 import InputPassword from '@/components/InputPassword'
 import Message from '@/components/Message'
-import { logIn, signUp } from '@/infrastructure/authentication'
+import { logIn, signUp } from '@/infrastructure/auth'
 
 type Props = {
   isSignUpMode?: boolean

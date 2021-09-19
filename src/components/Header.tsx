@@ -2,13 +2,12 @@ import React from 'react'
 import Link from 'next/link'
 import Styles from '@/styles/header.style'
 import InnerContainer from '@/components/InnerContainer'
-import { useScrollOver } from '@/hooks/useScrollOver'
 import HeaderNavigation from '@/components/HeaderNavigation'
-
-const SCROLL_THRESHOLD_Y = 80
+import { useScrollOverTrigger } from '@/hooks/scroll'
+import { HEADER_SCROLL_THRESHOLD_Y } from '@/constants/scroll'
 
 const Header: React.FC = () => {
-  const isScrollOver = useScrollOver(SCROLL_THRESHOLD_Y)
+  const isScrollOver = useScrollOverTrigger(HEADER_SCROLL_THRESHOLD_Y)
 
   return (
     <>

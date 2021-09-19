@@ -1,6 +1,10 @@
-import { AuthError, createUserWithEmailAndPassword, signInWithEmailAndPassword } from 'firebase/auth'
+import {
+  AuthError as FirebaseAuthError,
+  createUserWithEmailAndPassword,
+  signInWithEmailAndPassword,
+} from 'firebase/auth'
 import { firebaseAuth } from '@/libs/firebase'
-import AuthenticationError from '@/exceptions/AuthenticationError'
+import AuthError from '@/exceptions/AuthError'
 
 /**
  * 新規登録
@@ -12,7 +16,7 @@ export const signUp = async (email: string, password: string) => {
   try {
     return await createUserWithEmailAndPassword(firebaseAuth, email, password)
   } catch (error) {
-    throw new AuthenticationError(error as AuthError)
+    throw new AuthError(error as FirebaseAuthError)
   }
 }
 
@@ -26,6 +30,6 @@ export const logIn = async (email: string, password: string) => {
   try {
     return await signInWithEmailAndPassword(firebaseAuth, email, password)
   } catch (error) {
-    throw new AuthenticationError(error as AuthError)
+    throw new AuthError(error as FirebaseAuthError)
   }
 }

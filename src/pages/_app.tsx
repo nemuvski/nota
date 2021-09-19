@@ -3,10 +3,10 @@ import { DefaultSeo } from 'next-seo'
 import { Global } from '@emotion/react'
 import { Provider } from 'react-redux'
 import { store } from '@/stores/store'
+import { useAuthStateChanged } from '@/hooks/auth'
 import Styles from '@/styles/global.style'
 
 import 'modern-css-reset'
-import { useAuthStateChanged } from '@/hooks/useAuthStateChanged'
 
 const NotaApp = ({ Component, pageProps }: AppProps) => {
   /**

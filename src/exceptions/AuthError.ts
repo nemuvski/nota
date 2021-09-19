@@ -1,10 +1,10 @@
-import { AuthError, AuthErrorCodes } from 'firebase/auth'
+import { AuthError as FirebaseAuthError, AuthErrorCodes } from 'firebase/auth'
 
 /**
  * 認証関連のError
  */
-export default class AuthenticationError extends Error {
-  constructor(error: AuthError) {
+export default class AuthError extends Error {
+  constructor(error: FirebaseAuthError) {
     let message
 
     switch (error.code) {
