@@ -61,9 +61,11 @@ export default css(
     }
 
     button {
+      padding: 0;
       cursor: pointer;
       outline: none;
       border: 0;
+      background-color: transparent;
     }
 
     a {

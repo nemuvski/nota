@@ -1,9 +1,10 @@
 import React from 'react'
-import { useForm } from 'react-hook-form'
+import { Controller, useForm } from 'react-hook-form'
 import Styles from '@/styles/email-and-password-form.style'
 import Button from '@/styles/button.component'
 import { MIN_LENGTH_PASSWORD } from '@/constants/form'
 import InputText from '@/styles/input-text.component'
+import InputPassword from '@/components/InputPassword'
 
 type Props = {
   isSignUpMode?: boolean
@@ -16,6 +17,7 @@ type FormFields = {
 
 const EmailAndPasswordForm: React.FC<Props> = ({ isSignUpMode = false }) => {
   const {
+    control,
     register,
     handleSubmit,
     formState: { errors, isSubmitting },
@@ -45,10 +47,17 @@ const EmailAndPasswordForm: React.FC<Props> = ({ isSignUpMode = false }) => {
       </div>
       <div css={Styles.field}>
         <label css={Styles.fieldLabel}>Password</label>
-        <InputText
-          css={[Styles.fieldInput, errors.password && Styles.fieldInputError]}
-          type='password'
-          {...register('password', { required: true, minLength: MIN_LENGTH_PASSWORD })}
+        <Controller
+          control={control}
+          name='password'
+          rules={{ required: true, minLength: MIN_LENGTH_PASSWORD }}
+          render={({ field: { onChange, value } }) => (
+            <InputPassword
+              css={[Styles.fieldInput, errors.password && Styles.fieldInputError]}
+              onChange={onChange}
+              value={value}
+            />
+          )}
         />
       </div>
       <div css={Styles.actions}>
