@@ -70,5 +70,11 @@ export default css(
       color: var(--color-text);
       text-decoration: none;
     }
+
+    svg {
+      width: 100%;
+      height: auto;
+      vertical-align: middle;
+    }
   `
 )

@@ -1,9 +1,8 @@
 import React, { useState } from 'react'
 import { useRouter } from 'next/router'
+import { IoFileTrayOutline, IoFileTrayFullOutline } from 'react-icons/io5'
 import Styles from '@/styles/header-navigation.style'
 import Button from '@/styles/button.component'
-import TrayIcon from '../assets/tray.icon.svg'
-import TrayFillIcon from '../assets/tray-fill.icon.svg'
 
 const HeaderNavigation = () => {
   const router = useRouter()
@@ -18,7 +17,7 @@ const HeaderNavigation = () => {
         type='button'
         onClick={() => setIsOpen(!isOpen)}
       >
-        {isOpen ? <TrayIcon /> : <TrayFillIcon />}
+        {isOpen ? <IoFileTrayOutline /> : <IoFileTrayFullOutline />}
       </button>
 
       <ul css={[Styles.list, isOpen && Styles.listOpened]}>
