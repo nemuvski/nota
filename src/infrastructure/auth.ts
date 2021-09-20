@@ -3,6 +3,7 @@ import {
   createUserWithEmailAndPassword,
   signInWithEmailAndPassword,
   signOut,
+  sendPasswordResetEmail,
 } from 'firebase/auth'
 import { firebaseAuth } from '@/libs/firebase'
 import AuthError from '@/exceptions/AuthError'
@@ -41,6 +42,19 @@ export const logIn = async (email: string, password: string) => {
 export const logOut = async () => {
   try {
     await signOut(firebaseAuth)
+  } catch (error) {
+    throw new AuthError(error as FirebaseAuthError)
+  }
+}
+
+/**
+ * パスワードリセットの案内メールを送信する
+ *
+ * @param email
+ */
+export const sendPasswordResetInstructions = async (email: string) => {
+  try {
+    await sendPasswordResetEmail(firebaseAuth, email)
   } catch (error) {
     throw new AuthError(error as FirebaseAuthError)
   }

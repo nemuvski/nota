@@ -19,7 +19,7 @@ type FormFields = {
 }
 
 const EmailAndPasswordForm: React.FC<Props> = ({ isSignUpMode = false }) => {
-  const [errorMessage, setErrorMessage] = useState<string | null>(null)
+  const [messageContent, setMessageContent] = useState<MessageContent | null>(null)
 
   const {
     control,
@@ -43,16 +43,16 @@ const EmailAndPasswordForm: React.FC<Props> = ({ isSignUpMode = false }) => {
   const submit = async (formFields: FormFields) => {
     const { email, password } = formFields
     try {
-      setErrorMessage(null)
+      setMessageContent(null)
       isSignUpMode ? await signUp(email, password) : await logIn(email, password)
     } catch (error: any) {
-      setErrorMessage(error.message)
+      setMessageContent({ level: 'error', content: error.message })
     }
   }
 
   return (
     <Box>
-      {errorMessage && <Message level='error'>{errorMessage}</Message>}
+      {messageContent && <Message level={messageContent.level}>{messageContent.content}</Message>}
 
       <form onSubmit={handleSubmit(submit)}>
         <div css={Styles.field}>
