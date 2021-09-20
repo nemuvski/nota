@@ -54,7 +54,7 @@ const EmailAndPasswordForm: React.FC<Props> = ({ isSignUpMode = false }) => {
       {errorMessage && <Message level='error'>{errorMessage}</Message>}
 
       <div css={Styles.field}>
-        <label css={Styles.fieldLabel}>Email</label>
+        <label css={Styles.fieldLabel}>Email address</label>
         <InputText
           css={[Styles.fieldInput, errors.email && Styles.fieldInputError]}
           type='email'

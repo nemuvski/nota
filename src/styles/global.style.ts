@@ -95,6 +95,18 @@ export default css(
       vertical-align: middle;
     }
 
+    h1,
+    h2,
+    h3,
+    h4,
+    h5,
+    h6 {
+      margin: 1rem 0;
+      font-weight: bold;
+      letter-spacing: 0.05rem;
+      line-height: 1.4;
+    }
+
     p {
       margin: 1rem 0;
       line-height: 1.8;

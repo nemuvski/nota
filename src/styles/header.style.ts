@@ -35,9 +35,11 @@ const headerInner = css`
 `
 
 const headerTitle = css`
+  margin: 0;
   font-family: 'Lobster', cursive;
   font-size: 2.2rem;
   letter-spacing: 0.15rem;
+  line-height: 1.2;
 `
 
 const spacer = css`
