@@ -12,6 +12,8 @@ const ProtectedRoute: React.FC<Props> = ({ router, children }) => {
 
   if (!isBrowser()) return <>{children}</>
 
+  console.debug('[Current Page]', router.pathname)
+
   // ログインしているときにフロントページにリダイレクトする
   if (isLogin && /^\/(forgot-password|login|signup)\/?$/.test(router.pathname)) {
     router.replace('/')
