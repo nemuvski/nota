@@ -9,7 +9,7 @@ const LogoutPage: NextPage = () => {
   const router = useRouter()
   useEffect(() => {
     logOut().finally(() => {
-      router.push('/')
+      router.replace('/')
     })
   }, [router])
 
