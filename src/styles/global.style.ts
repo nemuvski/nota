@@ -63,6 +63,12 @@ export default css(
       font-size: 0.8rem;
     }
 
+    label {
+      display: block;
+      margin-bottom: 0.4rem;
+      font-weight: bold;
+    }
+
     input,
     button {
       appearance: none;

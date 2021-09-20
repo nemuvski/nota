@@ -4,6 +4,7 @@ import Styles from '@/styles/email-and-password-form.style'
 import Button from '@/styles/button.component'
 import { MIN_LENGTH_PASSWORD } from '@/constants/form'
 import InputText from '@/styles/input-text.component'
+import Box from '@/styles/box.component'
 import InputPassword from '@/components/InputPassword'
 import Message from '@/components/Message'
 import { logIn, signUp } from '@/infrastructure/auth'
@@ -50,42 +51,36 @@ const EmailAndPasswordForm: React.FC<Props> = ({ isSignUpMode = false }) => {
   }
 
   return (
-    <form css={Styles.root} onSubmit={handleSubmit(submit)}>
+    <Box>
       {errorMessage && <Message level='error'>{errorMessage}</Message>}
 
-      <div css={Styles.field}>
-        <label css={Styles.fieldLabel}>Email address</label>
-        <InputText
-          css={[Styles.fieldInput, errors.email && Styles.fieldInputError]}
-          type='email'
-          {...register('email', { required: true })}
-        />
-      </div>
-      <div css={Styles.field}>
-        <label css={Styles.fieldLabel}>Password</label>
-        <Controller
-          control={control}
-          name='password'
-          rules={{ required: true, minLength: MIN_LENGTH_PASSWORD }}
-          render={({ field: { onChange, value } }) => (
-            <InputPassword
-              css={[Styles.fieldInput, errors.password && Styles.fieldInputError]}
-              onChange={onChange}
-              value={value}
-            />
-          )}
-        />
-      </div>
-      <div css={Styles.actions}>
-        <Button
-          type='submit'
-          color='primary'
-          disabled={Boolean(errors.email) || Boolean(errors.password) || isSubmitting}
-        >
-          {isSignUpMode ? 'Sign up' : 'Log in'}
-        </Button>
-      </div>
-    </form>
+      <form onSubmit={handleSubmit(submit)}>
+        <div css={Styles.field}>
+          <label>Email address</label>
+          <InputText isError={Boolean(errors.email)} type='email' {...register('email', { required: true })} />
+        </div>
+        <div css={Styles.field}>
+          <label>Password</label>
+          <Controller
+            control={control}
+            name='password'
+            rules={{ required: true, minLength: MIN_LENGTH_PASSWORD }}
+            render={({ field: { onChange, value } }) => (
+              <InputPassword isError={Boolean(errors.password)} onChange={onChange} value={value} />
+            )}
+          />
+        </div>
+        <div css={Styles.actions}>
+          <Button
+            type='submit'
+            color='primary'
+            disabled={Boolean(errors.email) || Boolean(errors.password) || isSubmitting}
+          >
+            {isSignUpMode ? 'Sign up' : 'Log in'}
+          </Button>
+        </div>
+      </form>
+    </Box>
   )
 }
 
