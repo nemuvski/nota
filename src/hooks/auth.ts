@@ -14,16 +14,22 @@ export const useAuthStateChanged = () => {
   const [isProcessing, setIsProcessing] = useState(true)
 
   useEffect(() => {
+    let mounted = true
     const unsubscribe = onAuthStateChanged(
       firebaseAuth,
       (user) => {
-        setIsProcessing(true)
-        dispatch(setAuth({ user: user ? buildAuthUser(user) : null }))
-        setIsProcessing(false)
+        if (mounted) {
+          setIsProcessing(true)
+          dispatch(setAuth({ user: user ? buildAuthUser(user) : null }))
+          setIsProcessing(false)
+        }
       },
       (error) => console.error(error)
     )
-    return () => unsubscribe()
+    return () => {
+      unsubscribe()
+      mounted = false
+    }
   }, [dispatch])
 
   return isProcessing
