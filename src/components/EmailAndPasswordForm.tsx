@@ -7,7 +7,7 @@ import InputText from '@/styles/input-text.component'
 import Box from '@/styles/box.component'
 import InputPassword from '@/components/InputPassword'
 import Message from '@/components/Message'
-import { logIn, signUp } from '@/infrastructure/auth'
+import { logIn, sendEmailAddressVerification, signUp } from '@/infrastructure/auth'
 
 type Props = {
   isSignUpMode?: boolean
@@ -44,7 +44,12 @@ const EmailAndPasswordForm: React.FC<Props> = ({ isSignUpMode = false }) => {
     const { email, password } = formFields
     try {
       setMessageContent(null)
-      isSignUpMode ? await signUp(email, password) : await logIn(email, password)
+      if (isSignUpMode) {
+        const userCredential = await signUp(email, password)
+        await sendEmailAddressVerification(userCredential.user)
+      } else {
+        await logIn(email, password)
+      }
     } catch (error: any) {
       setMessageContent({ level: 'error', content: error.message })
     }
