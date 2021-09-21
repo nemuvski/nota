@@ -54,7 +54,7 @@ const ForgotPasswordPage: NextPage = () => {
         <Paragraph alignment='center'>
           Enter your email address below and
           <br />
-          {"we'll send your password reset instructions"}
+          {"we'll send your password reset instructions."}
         </Paragraph>
 
         {messageContent && <Message level={messageContent.level}>{messageContent.content}</Message>}

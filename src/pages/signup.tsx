@@ -9,6 +9,7 @@ const SignupPage: NextPage = () => {
   return (
     <Layout title='Sign up'>
       <PageTitle>Sign up</PageTitle>
+      <Paragraph alignment='center'>{"After you sign up, we'll send you an email verification."}</Paragraph>
       <EmailAndPasswordForm isSignUpMode={true} />
       <Paragraph alignment='center'>
         Already have an account? <Link href='/login'>Log in here</Link>
