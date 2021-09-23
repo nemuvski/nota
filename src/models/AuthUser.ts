@@ -4,7 +4,7 @@ import { User } from 'firebase/auth'
  * Firebase Authenticationで得られるUserオブジェクトの一部
  */
 export type AuthUser = {
-  uid: string
+  uid: AuthUid
   email: string | null
   emailVerified: boolean
 }

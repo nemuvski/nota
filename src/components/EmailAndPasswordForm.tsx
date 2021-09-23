@@ -8,6 +8,7 @@ import Box from '@/styles/box.component'
 import InputPassword from '@/components/InputPassword'
 import Message from '@/components/Message'
 import { logIn, sendEmailAddressVerification, signUp } from '@/infrastructure/auth'
+import { addAccount } from '@/infrastructure/account'
 
 type Props = {
   isSignUpMode?: boolean
@@ -45,9 +46,14 @@ const EmailAndPasswordForm: React.FC<Props> = ({ isSignUpMode = false }) => {
     try {
       setMessageContent(null)
       if (isSignUpMode) {
+        // 新規登録
         const userCredential = await signUp(email, password)
+        // メールアドレスの確認メール
         await sendEmailAddressVerification(userCredential.user)
+        // Accountドキュメントを追加
+        await addAccount(userCredential.user.uid)
       } else {
+        // ログイン
         await logIn(email, password)
       }
     } catch (error: any) {
