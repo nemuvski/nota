@@ -7,9 +7,11 @@
     "build": "next build",
     "build:analyze": "ANALYZE=1 next build",
     "start": "next start",
+    "test:firestore": "firebase emulators:exec --only firestore \"jest src/test/firestore.test.ts --silent\"",
     "lint": "next lint --dir src",
     "format": "prettier --check --ignore-path .gitignore './**/*.{js,jsx,ts,tsx}'",
-    "format:fix": "prettier --write --ignore-path .gitignore './**/*.{js,jsx,ts,tsx}'"
+    "format:fix": "prettier --write --ignore-path .gitignore './**/*.{js,jsx,ts,tsx}'",
+    "deploy:firestore:rules": "firebase deploy --only firestore:rules"
   },
   "dependencies": {
     "@emotion/react": "^11.4.1",

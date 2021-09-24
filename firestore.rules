@@ -2,9 +2,51 @@ rules_version = '2';
 
 service cloud.firestore {
   match /databases/{database}/documents {
-    match /{document=**} {
-      allow read, write: if
-          request.time < timestamp.date(2021, 10, 17);
+    /**
+     * 認証済みなら許可
+     */
+    function isAuthorized() {
+      return request.auth != null;
+    }
+    /**
+     * CreateリクエストのAccountデータが正しい場合は許可
+     */
+    function isValidCreatingAccount(reqUid, reqData) {
+      return (
+        reqData.keys().hasAll(['uid', 'displayName', 'status', 'createdAt', 'updatedAt'])
+        && reqData.uid == reqUid
+        && reqData.displayName is string
+        && reqData.status == 'active'
+        && reqData.createdAt is timestamp
+        && reqData.updatedAt is timestamp
+      );
+    }
+    /**
+     * UpdateリクエストのAccountデータが正しい場合は許可
+     */
+    function isValidUpdatingAccount(reqUid, reqData) {
+      return (
+        reqData.keys().hasOnly(['displayName', 'avatarUrl', 'status', 'updatedAt'])
+        // updatedAtフィールドは必須
+        && reqData.keys().hasAll(['updatedAt'])
+        && reqData.displayName is string
+        && reqData.avatarUrl is string
+        && reqData.status in ['active', 'inactive']
+        && reqData.updatedAt is timestamp
+      );
+    }
+
+    match /NotaApp/v0 {
+      /**
+       * Accountコレクション
+       */
+      match /Account/{docId} {
+        allow get: if resource.data.status == 'active';
+        allow list: if resource.data.status == 'active';
+        allow create: if isAuthorized() && docId == request.auth.uid && isValidCreatingAccount(request.auth.uid, request.resource.data);
+        allow update: if isAuthorized() && docId == request.auth.uid && isValidUpdatingAccount(request.auth.uid, request.resource.data);
+        allow delete: if false;
+      }
     }
   }
 }
