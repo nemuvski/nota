@@ -1,5 +1,6 @@
 import React, { useState } from 'react'
 import { Controller, useForm } from 'react-hook-form'
+import { useDispatch } from 'react-redux'
 import Styles from '@/styles/email-and-password-form.style'
 import Button from '@/styles/button.component'
 import { MIN_LENGTH_PASSWORD } from '@/constants/form'
@@ -8,7 +9,7 @@ import Box from '@/styles/box.component'
 import InputPassword from '@/components/InputPassword'
 import Message from '@/components/Message'
 import { logIn, sendEmailAddressVerification, signUp } from '@/infrastructure/auth'
-import { addAccount } from '@/infrastructure/account'
+import { addAccountAction } from '@/stores/account/action'
 
 type Props = {
   isSignUpMode?: boolean
@@ -20,6 +21,7 @@ type FormFields = {
 }
 
 const EmailAndPasswordForm: React.FC<Props> = ({ isSignUpMode = false }) => {
+  const dispatch = useDispatch()
   const [messageContent, setMessageContent] = useState<MessageContent | null>(null)
 
   const {
@@ -51,7 +53,7 @@ const EmailAndPasswordForm: React.FC<Props> = ({ isSignUpMode = false }) => {
         // メールアドレスの確認メール
         await sendEmailAddressVerification(userCredential.user)
         // Accountドキュメントを追加
-        await addAccount(userCredential.user.uid)
+        dispatch(addAccountAction(userCredential.user.uid))
       } else {
         // ログイン
         await logIn(email, password)

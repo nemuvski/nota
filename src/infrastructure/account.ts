@@ -14,7 +14,7 @@ import FirestoreError from '@/exceptions/FirestoreError'
 const collectionRef = collection(firestore, PREFIX_COLLECTION_PATH, 'Account')
 
 /**
- * Accountドキュメントを追加（新規作成時に利用される）
+ * Accountドキュメントを追加（新規作成時に利用される）し、追加したドキュメントを取得
  *
  * @param uid
  * @param displayName
@@ -30,6 +30,7 @@ export const addAccount = async (uid: AuthUid, displayName = 'Incognito') => {
       createdAt: currentTimestamp,
       updatedAt: currentTimestamp,
     })
+    return await getAccount(uid)
   } catch (error) {
     throw new FirestoreError(error as FirebaseFirestoreError)
   }
