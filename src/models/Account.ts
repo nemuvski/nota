@@ -1,6 +1,5 @@
 import { DocumentData, Timestamp } from 'firebase/firestore'
-import { Dayjs } from 'dayjs'
-import dayjs from 'dayjs/esm'
+import dayjs, { Dayjs } from 'dayjs'
 
 /**
  * Accountエンティティ
