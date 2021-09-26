@@ -2,15 +2,16 @@ import type { NextPage } from 'next'
 import { useState } from 'react'
 import Link from 'next/link'
 import { useForm } from 'react-hook-form'
+import { sendPasswordResetInstructions } from '@/infrastructure/auth'
 import Layout from '@/components/Layout'
 import Message from '@/components/Message'
-import Styles from '@/styles/forgot-password-page.style'
 import Paragraph from '@/styles/paragraph.component'
 import PageTitle from '@/styles/page-title.component'
 import InputText from '@/styles/input-text.component'
 import Button from '@/styles/button.component'
 import Box from '@/styles/box.component'
-import { sendPasswordResetInstructions } from '@/infrastructure/auth'
+import FormActions from '@/styles/form-actions.component'
+import FormField from '@/styles/form-field.component'
 
 type FormFields = {
   email: string
@@ -60,16 +61,16 @@ const ForgotPasswordPage: NextPage = () => {
         {messageContent && <Message level={messageContent.level}>{messageContent.content}</Message>}
 
         <form onSubmit={handleSubmit(submit)}>
-          <div>
+          <FormField>
             <label>Email address</label>
             <InputText isError={Boolean(errors.email)} type='email' {...register('email', { required: true })} />
-          </div>
+          </FormField>
 
-          <div css={Styles.actions}>
+          <FormActions>
             <Button type='submit' color='primary' disabled={Boolean(errors.email) || isSubmitting}>
               Send
             </Button>
-          </div>
+          </FormActions>
         </form>
 
         <Paragraph alignment='center'>

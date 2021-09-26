@@ -6,11 +6,12 @@ import InputPassword from '@/components/InputPassword'
 import Message from '@/components/Message'
 import { logIn, sendEmailAddressVerification, signUp } from '@/infrastructure/auth'
 import { addAccountAction } from '@/stores/account/action'
-import Styles from '@/styles/email-and-password-form.style'
 import Button from '@/styles/button.component'
 import { MIN_LENGTH_PASSWORD } from '@/constants/form'
 import InputText from '@/styles/input-text.component'
 import Box from '@/styles/box.component'
+import FormActions from '@/styles/form-actions.component'
+import FormField from '@/styles/form-field.component'
 
 type Props = {
   isSignUpMode?: boolean
@@ -73,11 +74,12 @@ const EmailAndPasswordForm: React.FC<Props> = ({ isSignUpMode = false }) => {
       {messageContent && <Message level={messageContent.level}>{messageContent.content}</Message>}
 
       <form onSubmit={handleSubmit(submit)}>
-        <div css={Styles.field}>
+        <FormField>
           <label>Email address</label>
           <InputText isError={Boolean(errors.email)} type='email' {...register('email', { required: true })} />
-        </div>
-        <div css={Styles.field}>
+        </FormField>
+
+        <FormField>
           <label>Password</label>
           <Controller
             control={control}
@@ -87,8 +89,9 @@ const EmailAndPasswordForm: React.FC<Props> = ({ isSignUpMode = false }) => {
               <InputPassword isError={Boolean(errors.password)} onChange={onChange} value={value} />
             )}
           />
-        </div>
-        <div css={Styles.actions}>
+        </FormField>
+
+        <FormActions>
           <Button
             type='submit'
             color='primary'
@@ -96,7 +99,7 @@ const EmailAndPasswordForm: React.FC<Props> = ({ isSignUpMode = false }) => {
           >
             {isSignUpMode ? 'Sign up' : 'Log in'}
           </Button>
-        </div>
+        </FormActions>
       </form>
     </Box>
   )
