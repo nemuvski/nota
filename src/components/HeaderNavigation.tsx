@@ -39,7 +39,7 @@ const HeaderNavigation = () => {
         ) : (
           <>
             <li>
-              <Button type='button' onClick={() => router.push('/dashboard')}>
+              <Button color='primary' type='button' onClick={() => router.push('/dashboard')}>
                 Dashboard
               </Button>
             </li>

@@ -30,10 +30,15 @@ const listOpened = css`
     top: 3rem;
     display: flex;
     flex-direction: column;
+    width: 8.5rem;
     padding: 0.75rem;
     border-radius: 0 0 0.3rem 0.3rem;
     background-color: var(--color-back);
 
+    li,
+    button {
+      width: 100%;
+    }
     li:not(:last-of-type) {
       margin-bottom: 0.5rem;
     }
