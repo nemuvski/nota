@@ -65,10 +65,17 @@ export const sendPasswordResetInstructions = async (email: string) => {
 
 /**
  * メールアドレスの確認のメールを送信する
+ *
+ * @param user
  */
-export const sendEmailAddressVerification = async (user: User) => {
+export const sendEmailAddressVerification = async (user?: User) => {
   try {
-    await sendEmailVerification(user)
+    const currentUser = user ?? firebaseAuth.currentUser
+    if (currentUser) {
+      await sendEmailVerification(currentUser)
+    } else {
+      console.error('Failed to send an email verification')
+    }
   } catch (error) {
     throw new AuthError(error as FirebaseAuthError)
   }

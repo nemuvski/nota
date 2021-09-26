@@ -6,6 +6,7 @@ import Styles from '@/styles/settings-index-page.style'
 import PageTitle from '@/styles/page-title.component'
 import Box from '@/styles/box.component'
 import Button from '@/styles/button.component'
+import EmailVerifyMessage from '@/components/EmailVerifyMessage'
 
 const SettingsIndexPage: NextPage = () => {
   const router = useRouter()
@@ -15,6 +16,8 @@ const SettingsIndexPage: NextPage = () => {
       <PageTitle>Settings</PageTitle>
 
       <Box>
+        <EmailVerifyMessage />
+
         <ul css={Styles.menu}>
           <li>
             <Button color='gray' type='button' onClick={() => router.push('/settings/change-profile')}>
