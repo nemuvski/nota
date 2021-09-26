@@ -28,6 +28,10 @@ const Button = styled.button<Props>(
       bgColor = 'var(--color-secondary-main)'
       hoverBgColor = 'var(--color-secondary-dark)'
       textColor = 'var(--color-back)'
+    } else if (color === 'gray') {
+      bgColor = 'var(--color-gray-main)'
+      hoverBgColor = 'var(--color-gray-dark)'
+      textColor = 'var(--color-text)'
     }
 
     return css`
