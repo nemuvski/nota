@@ -1,12 +1,15 @@
 import {
   UserCredential,
   User,
+  EmailAuthProvider,
   AuthError as FirebaseAuthError,
   createUserWithEmailAndPassword,
   signInWithEmailAndPassword,
   signOut,
   sendPasswordResetEmail,
   sendEmailVerification,
+  reauthenticateWithCredential,
+  updateEmail,
 } from 'firebase/auth'
 import { firebaseAuth } from '@/libs/firebase'
 import AuthError from '@/exceptions/AuthError'
@@ -45,6 +48,26 @@ export const logIn = async (email: string, password: string): Promise<UserCreden
 export const logOut = async () => {
   try {
     await signOut(firebaseAuth)
+  } catch (error) {
+    throw new AuthError(error as FirebaseAuthError)
+  }
+}
+
+/**
+ * メールアドレスの変更
+ *
+ * @param newEmail
+ * @param password
+ */
+export const changeEmailAddress = async (newEmail: string, password: string) => {
+  try {
+    const currentUser = firebaseAuth.currentUser
+    if (currentUser && currentUser.email) {
+      await reauthenticateWithCredential(currentUser, EmailAuthProvider.credential(currentUser.email, password))
+      await updateEmail(currentUser, newEmail)
+    } else {
+      console.error('Failed to change your email address')
+    }
   } catch (error) {
     throw new AuthError(error as FirebaseAuthError)
   }
