@@ -7,9 +7,14 @@ import PageTitle from '@/styles/page-title.component'
 import Box from '@/styles/box.component'
 import Button from '@/styles/button.component'
 import EmailVerifyMessage from '@/components/EmailVerifyMessage'
+import { useLoginState } from '@/hooks/auth'
 
 const SettingsIndexPage: NextPage = () => {
   const router = useRouter()
+  const { auth } = useLoginState()
+
+  if (!auth) return null
+
   return (
     <Layout title='Settings'>
       <PageTitle>Settings</PageTitle>
@@ -27,15 +32,25 @@ const SettingsIndexPage: NextPage = () => {
             </Button>
           </li>
           <li>
-            <Button color='gray' type='button' onClick={() => router.push('/settings/change-email')}>
+            <Button
+              color={auth.emailVerified ? 'gray' : 'secondary'}
+              type='button'
+              onClick={() => auth.emailVerified && router.push('/settings/change-email')}
+              disabled={!auth.emailVerified}
+            >
               <div css={Styles.icon}>
                 <IoMailOutline />
               </div>
-              <span>Change Email Address</span>
+              <span>Change Email</span>
             </Button>
           </li>
           <li>
-            <Button color='gray' type='button' onClick={() => router.push('/settings/change-password')}>
+            <Button
+              color={auth.emailVerified ? 'gray' : 'secondary'}
+              type='button'
+              onClick={() => auth.emailVerified && router.push('/settings/change-password')}
+              disabled={!auth.emailVerified}
+            >
               <div css={Styles.icon}>
                 <IoKeyOutline />
               </div>
