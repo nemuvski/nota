@@ -1,16 +1,16 @@
 import React, { useState } from 'react'
+import { useRouter } from 'next/router'
 import { Controller, useForm } from 'react-hook-form'
 import { useDispatch } from 'react-redux'
+import InputPassword from '@/components/InputPassword'
+import Message from '@/components/Message'
+import { logIn, sendEmailAddressVerification, signUp } from '@/infrastructure/auth'
+import { addAccountAction } from '@/stores/account/action'
 import Styles from '@/styles/email-and-password-form.style'
 import Button from '@/styles/button.component'
 import { MIN_LENGTH_PASSWORD } from '@/constants/form'
 import InputText from '@/styles/input-text.component'
 import Box from '@/styles/box.component'
-import InputPassword from '@/components/InputPassword'
-import Message from '@/components/Message'
-import { logIn, sendEmailAddressVerification, signUp } from '@/infrastructure/auth'
-import { addAccountAction } from '@/stores/account/action'
-import { useRouter } from 'next/router'
 
 type Props = {
   isSignUpMode?: boolean
