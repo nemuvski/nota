@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useState } from 'react'
 import { IoPaperPlaneOutline } from 'react-icons/io5'
 import Message from '@/components/Message'
 import { useLoginState } from '@/hooks/auth'
@@ -7,6 +7,7 @@ import { sendEmailAddressVerification } from '@/infrastructure/auth'
 
 const EmailVerifyMessage = () => {
   const { auth } = useLoginState()
+  const [isSent, setIsSent] = useState(false)
 
   // メールアドレスの確認がされていない場合にのみ表示される
   if (auth && auth.emailVerified) return null
@@ -17,6 +18,7 @@ const EmailVerifyMessage = () => {
   const sendEmail = async () => {
     try {
       await sendEmailAddressVerification()
+      setIsSent(true)
     } catch (error) {
       console.error(error)
     }
@@ -26,7 +28,7 @@ const EmailVerifyMessage = () => {
     <Message level='warning'>
       <div css={Styles.content}>
         <span>Please verify your email address</span>
-        <button css={Styles.button} type='button' onClick={() => sendEmail()}>
+        <button css={Styles.button} type='button' onClick={() => sendEmail()} disabled={isSent}>
           <div css={Styles.buttonIcon}>
             <IoPaperPlaneOutline />
           </div>
