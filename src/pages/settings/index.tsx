@@ -1,17 +1,18 @@
 import type { NextPage } from 'next'
 import { useRouter } from 'next/router'
+import { useSelector } from 'react-redux'
 import { IoPersonCircleOutline, IoMailOutline, IoKeyOutline } from 'react-icons/io5'
+import { selectAuth } from '@/stores/auth/selector'
 import Layout from '@/components/Layout'
 import Styles from '@/styles/settings-index-page.style'
 import PageTitle from '@/styles/styled-components/page-title.component'
 import Box from '@/styles/styled-components/box.component'
 import Button from '@/styles/styled-components/button.component'
 import EmailVerifyMessage from '@/components/EmailVerifyMessage'
-import { useLoginState } from '@/hooks/auth'
 
 const SettingsIndexPage: NextPage = () => {
   const router = useRouter()
-  const { auth } = useLoginState()
+  const auth = useSelector(selectAuth)
 
   if (!auth) return null
 

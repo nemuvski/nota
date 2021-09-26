@@ -22,7 +22,7 @@ const ForgotPasswordPage: NextPage = () => {
   const {
     register,
     handleSubmit,
-    formState: { errors, isSubmitting },
+    formState: { errors, isSubmitting, isValid },
   } = useForm<FormFields>({
     mode: 'onChange',
     reValidateMode: 'onChange',
@@ -67,7 +67,7 @@ const ForgotPasswordPage: NextPage = () => {
           </FormField>
 
           <FormActions>
-            <Button type='submit' color='primary' disabled={Boolean(errors.email) || isSubmitting}>
+            <Button type='submit' color='primary' disabled={!isValid || isSubmitting}>
               Send
             </Button>
           </FormActions>

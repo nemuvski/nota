@@ -31,7 +31,7 @@ const EmailAndPasswordForm: React.FC<Props> = ({ isSignUpMode = false }) => {
     control,
     register,
     handleSubmit,
-    formState: { errors, isSubmitting },
+    formState: { errors, isSubmitting, isValid },
   } = useForm<FormFields>({
     mode: 'onChange',
     reValidateMode: 'onChange',
@@ -92,11 +92,7 @@ const EmailAndPasswordForm: React.FC<Props> = ({ isSignUpMode = false }) => {
         </FormField>
 
         <FormActions>
-          <Button
-            type='submit'
-            color='primary'
-            disabled={Boolean(errors.email) || Boolean(errors.password) || isSubmitting}
-          >
+          <Button type='submit' color='primary' disabled={!isValid || isSubmitting}>
             {isSignUpMode ? 'Sign up' : 'Log in'}
           </Button>
         </FormActions>
