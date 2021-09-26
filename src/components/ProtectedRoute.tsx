@@ -19,7 +19,7 @@ const ProtectedRoute: React.FC<Props> = ({ router, children }) => {
     router.replace('/')
   }
   // ログインしていないときにログインページにリダイレクトする
-  else if (/^\/(mypage)\/?$/.test(router.pathname)) {
+  else if (!isLogin && /^\/(dashboard|settings)\/?$/.test(router.pathname)) {
     router.replace('/login')
   }
 

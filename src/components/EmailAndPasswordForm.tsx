@@ -10,6 +10,7 @@ import InputPassword from '@/components/InputPassword'
 import Message from '@/components/Message'
 import { logIn, sendEmailAddressVerification, signUp } from '@/infrastructure/auth'
 import { addAccountAction } from '@/stores/account/action'
+import { useRouter } from 'next/router'
 
 type Props = {
   isSignUpMode?: boolean
@@ -22,6 +23,7 @@ type FormFields = {
 
 const EmailAndPasswordForm: React.FC<Props> = ({ isSignUpMode = false }) => {
   const dispatch = useDispatch()
+  const router = useRouter()
   const [messageContent, setMessageContent] = useState<MessageContent | null>(null)
 
   const {
@@ -58,6 +60,9 @@ const EmailAndPasswordForm: React.FC<Props> = ({ isSignUpMode = false }) => {
         // ログイン
         await logIn(email, password)
       }
+
+      // ログイン後はダッシュボードページに遷移
+      router.push('/dashboard')
     } catch (error: any) {
       setMessageContent({ level: 'error', content: error.message })
     }

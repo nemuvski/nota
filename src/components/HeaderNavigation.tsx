@@ -40,6 +40,16 @@ const HeaderNavigation = () => {
         ) : (
           <>
             <li>
+              <Link href='/dashboard'>
+                <a>Dashboard</a>
+              </Link>
+            </li>
+            <li>
+              <Link href='/settings'>
+                <a>Settings</a>
+              </Link>
+            </li>
+            <li>
               <Link href='/logout'>
                 <a>Log out</a>
               </Link>
