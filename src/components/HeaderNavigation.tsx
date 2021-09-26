@@ -1,5 +1,4 @@
 import React, { useState } from 'react'
-import Link from 'next/link'
 import { useRouter } from 'next/router'
 import { IoFileTrayOutline, IoFileTrayFullOutline } from 'react-icons/io5'
 import Styles from '@/styles/header-navigation.style'
@@ -40,19 +39,19 @@ const HeaderNavigation = () => {
         ) : (
           <>
             <li>
-              <Link href='/dashboard'>
-                <a>Dashboard</a>
-              </Link>
+              <Button type='button' onClick={() => router.push('/dashboard')}>
+                Dashboard
+              </Button>
             </li>
             <li>
-              <Link href='/settings'>
-                <a>Settings</a>
-              </Link>
+              <Button type='button' onClick={() => router.push('/settings')}>
+                Settings
+              </Button>
             </li>
             <li>
-              <Link href='/logout'>
-                <a>Log out</a>
-              </Link>
+              <Button type='button' onClick={() => router.push('/logout')}>
+                Log out
+              </Button>
             </li>
           </>
         )}
