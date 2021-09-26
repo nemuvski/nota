@@ -1,7 +1,7 @@
 import React, { useState } from 'react'
 import { IoEye, IoEyeOff } from 'react-icons/io5'
 import Styles from '@/styles/input-password.style'
-import InputText from '@/styles/input-text.component'
+import InputText from '@/styles/styled-components/input-text.component'
 
 const InputPassword = ({ ...props }) => {
   const [isVisible, setIsVisible] = useState(false)

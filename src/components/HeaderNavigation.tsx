@@ -2,7 +2,7 @@ import React, { useState } from 'react'
 import { useRouter } from 'next/router'
 import { IoFileTrayOutline, IoFileTrayFullOutline } from 'react-icons/io5'
 import Styles from '@/styles/header-navigation.style'
-import Button from '@/styles/button.component'
+import Button from '@/styles/styled-components/button.component'
 import { useLoginState } from '@/hooks/auth'
 
 const HeaderNavigation = () => {

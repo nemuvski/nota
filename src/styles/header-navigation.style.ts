@@ -1,5 +1,5 @@
 import { css } from '@emotion/react'
-import { bp, Breakpoint } from '@/styles/breakpoints.mixin'
+import { bp, Breakpoint } from '@/styles/mixins/breakpoints.mixin'
 
 const root = css`
   position: relative;

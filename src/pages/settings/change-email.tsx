@@ -1,7 +1,7 @@
 import type { NextPage } from 'next'
 import Layout from '@/components/Layout'
-import PageTitle from '@/styles/page-title.component'
-import Box from '@/styles/box.component'
+import PageTitle from '@/styles/styled-components/page-title.component'
+import Box from '@/styles/styled-components/box.component'
 
 const ChangeEmailPage: NextPage = () => {
   return (

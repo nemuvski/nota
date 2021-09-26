@@ -1,5 +1,5 @@
 import { css } from '@emotion/react'
-import { bp, Breakpoint } from '@/styles/breakpoints.mixin'
+import { bp, Breakpoint } from '@/styles/mixins/breakpoints.mixin'
 
 const googleFonts = css`
   @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400&family=Lobster&display=swap');

@@ -1,8 +1,8 @@
 import type { NextPage } from 'next'
 import Layout from '@/components/Layout'
-import PageTitle from '@/styles/page-title.component'
-import Paragraph from '@/styles/paragraph.component'
-import Button from '@/styles/button.component'
+import PageTitle from '@/styles/styled-components/page-title.component'
+import Paragraph from '@/styles/styled-components/paragraph.component'
+import Button from '@/styles/styled-components/button.component'
 import { useRouter } from 'next/router'
 
 const NotFoundPage: NextPage = () => {

@@ -2,8 +2,8 @@ import type { NextPage } from 'next'
 import Link from 'next/link'
 import Layout from '@/components/Layout'
 import EmailAndPasswordForm from '@/components/EmailAndPasswordForm'
-import Paragraph from '@/styles/paragraph.component'
-import PageTitle from '@/styles/page-title.component'
+import Paragraph from '@/styles/styled-components/paragraph.component'
+import PageTitle from '@/styles/styled-components/page-title.component'
 
 const SignupPage: NextPage = () => {
   return (

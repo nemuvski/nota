@@ -6,12 +6,12 @@ import InputPassword from '@/components/InputPassword'
 import Message from '@/components/Message'
 import { logIn, sendEmailAddressVerification, signUp } from '@/infrastructure/auth'
 import { addAccountAction } from '@/stores/account/action'
-import Button from '@/styles/button.component'
+import Button from '@/styles/styled-components/button.component'
 import { MIN_LENGTH_PASSWORD } from '@/constants/form'
-import InputText from '@/styles/input-text.component'
-import Box from '@/styles/box.component'
-import FormActions from '@/styles/form-actions.component'
-import FormField from '@/styles/form-field.component'
+import InputText from '@/styles/styled-components/input-text.component'
+import Box from '@/styles/styled-components/box.component'
+import FormActions from '@/styles/styled-components/form-actions.component'
+import FormField from '@/styles/styled-components/form-field.component'
 
 type Props = {
   isSignUpMode?: boolean
