@@ -50,6 +50,7 @@ const NotaApp = ({ Component, pageProps, router }: AppProps) => {
       <Global styles={Styles} />
       <Provider store={store}>
         <RootComponent />
+        <div id='portal' />
       </Provider>
     </>
   )
