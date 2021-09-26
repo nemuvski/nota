@@ -10,7 +10,6 @@ import EmailVerifyMessage from '@/components/EmailVerifyMessage'
 
 const SettingsIndexPage: NextPage = () => {
   const router = useRouter()
-
   return (
     <Layout title='Settings'>
       <PageTitle>Settings</PageTitle>
