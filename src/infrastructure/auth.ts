@@ -9,6 +9,7 @@ import {
   sendEmailVerification,
   reauthenticateWithCredential,
   updateEmail,
+  updatePassword,
 } from 'firebase/auth'
 import { firebaseAuth } from '@/libs/firebase'
 import AuthError from '@/exceptions/AuthError'
@@ -72,6 +73,20 @@ export const changeEmailAddress = async (newEmail: string) => {
   try {
     const currentUser = getCurrentUser()
     await updateEmail(currentUser, newEmail)
+  } catch (error) {
+    throw new AuthError(error as FirebaseAuthError)
+  }
+}
+
+/**
+ * パスワードの変更
+ *
+ * @param newPassword
+ */
+export const changePassword = async (newPassword: string) => {
+  try {
+    const currentUser = getCurrentUser()
+    await updatePassword(currentUser, newPassword)
   } catch (error) {
     throw new AuthError(error as FirebaseAuthError)
   }
