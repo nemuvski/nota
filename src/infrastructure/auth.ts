@@ -67,16 +67,11 @@ export const logOut = async () => {
  * メールアドレスの変更
  *
  * @param newEmail
- * @param password
  */
-export const changeEmailAddress = async (newEmail: string, password: string) => {
+export const changeEmailAddress = async (newEmail: string) => {
   try {
     const currentUser = getCurrentUser()
-    // 認証方法はメールアドレス/パスワード認証のみなので、必ずメールアドレスは入る
-    if (currentUser.email) {
-      await reauthenticateWithCredential(currentUser, EmailAuthProvider.credential(currentUser.email, password))
-      await updateEmail(currentUser, newEmail)
-    }
+    await updateEmail(currentUser, newEmail)
   } catch (error) {
     throw new AuthError(error as FirebaseAuthError)
   }
@@ -102,6 +97,23 @@ export const sendEmailAddressVerification = async () => {
   try {
     const currentUser = getCurrentUser()
     await sendEmailVerification(currentUser)
+  } catch (error) {
+    throw new AuthError(error as FirebaseAuthError)
+  }
+}
+
+/**
+ * 再認証
+ *
+ * @param password
+ */
+export const reauthenticate = async (password: string) => {
+  try {
+    const currentUser = getCurrentUser()
+    // 認証方法はメールアドレス/パスワード認証のみなので、必ずメールアドレスは入る
+    if (currentUser.email) {
+      await reauthenticateWithCredential(currentUser, EmailAuthProvider.credential(currentUser.email, password))
+    }
   } catch (error) {
     throw new AuthError(error as FirebaseAuthError)
   }

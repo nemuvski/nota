@@ -8,7 +8,7 @@ type Props = {
 }
 
 const ProtectedRoute: React.FC<Props> = ({ router, children }) => {
-  const { isLogin, auth } = useLoginState()
+  const { isLogin } = useLoginState()
 
   if (!isBrowser()) return <>{children}</>
 
@@ -20,11 +20,6 @@ const ProtectedRoute: React.FC<Props> = ({ router, children }) => {
   if (isLogin) {
     if (/^\/(forgot-password|login|signup)\/?/.test(pathname)) {
       router.replace('/')
-    }
-
-    // メールアドレス確認がされていないときは、メールアドレスとパスワードの変更はできないようにリダイレクトさせる
-    if (!auth?.emailVerified && /^\/(settings\/change-email|settings\/change-password)\/?/.test(pathname)) {
-      router.replace('/settings')
     }
   }
   // ログインしていないときのリダイレクト

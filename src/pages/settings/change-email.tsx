@@ -1,20 +1,22 @@
 import type { NextPage } from 'next'
+import { useState } from 'react'
 import { useRouter } from 'next/router'
 import { useSelector } from 'react-redux'
 import { Controller, useForm } from 'react-hook-form'
 import { MIN_LENGTH_PASSWORD } from '@/constants/form'
 import { selectAuth } from '@/stores/auth/selector'
+import { changeEmailAddress, reauthenticate } from '@/infrastructure/auth'
 import Layout from '@/components/Layout'
 import InputPassword from '@/components/InputPassword'
+import EmailVerifyMessage from '@/components/EmailVerifyMessage'
+import Message from '@/components/Message'
 import PageTitle from '@/styles/styled-components/page-title.component'
 import Box from '@/styles/styled-components/box.component'
 import FormField from '@/styles/styled-components/form-field.component'
 import InputText from '@/styles/styled-components/input-text.component'
 import FormActions from '@/styles/styled-components/form-actions.component'
 import Button from '@/styles/styled-components/button.component'
-import React, { useState } from 'react'
-import Message from '@/components/Message'
-import { changeEmailAddress } from '@/infrastructure/auth'
+import Paragraph from '@/styles/styled-components/paragraph.component'
 
 type FormFields = {
   newEmail: string
@@ -26,6 +28,7 @@ const ChangeEmailPage: NextPage = () => {
   const auth = useSelector(selectAuth)
   const [messageContent, setMessageContent] = useState<MessageContent | null>(null)
   const currentEmail = auth && auth.email ? auth.email : ''
+  const isEmailVerified = auth && auth.emailVerified
 
   const {
     control,
@@ -59,8 +62,10 @@ const ChangeEmailPage: NextPage = () => {
     }
 
     try {
-      await changeEmailAddress(newEmail, password)
-      setMessageContent({ level: 'success', content: 'Email address changed' })
+      // メールアドレス変更前にパスワードチェック
+      await reauthenticate(password)
+      await changeEmailAddress(newEmail)
+      await router.push('./')
     } catch (error: any) {
       setMessageContent({ level: 'error', content: error.message })
     }
@@ -71,6 +76,15 @@ const ChangeEmailPage: NextPage = () => {
       <PageTitle>Change Email</PageTitle>
 
       <Box>
+        {!isEmailVerified && (
+          <Paragraph alignment='center'>
+            If you want to change your Email address,
+            <br />
+            please complete your email address verification.
+          </Paragraph>
+        )}
+
+        <EmailVerifyMessage />
         {messageContent && <Message level={messageContent.level}>{messageContent.content}</Message>}
 
         <form onSubmit={handleSubmit(submit)}>
@@ -81,7 +95,12 @@ const ChangeEmailPage: NextPage = () => {
 
           <FormField>
             <label>New Email address</label>
-            <InputText isError={Boolean(errors.newEmail)} type='email' {...register('newEmail', { required: true })} />
+            <InputText
+              isError={Boolean(errors.newEmail)}
+              type='email'
+              {...register('newEmail', { required: true })}
+              disabled={!isEmailVerified}
+            />
           </FormField>
 
           <FormField>
@@ -91,7 +110,12 @@ const ChangeEmailPage: NextPage = () => {
               name='password'
               rules={{ required: true, minLength: MIN_LENGTH_PASSWORD }}
               render={({ field: { onChange, value } }) => (
-                <InputPassword isError={Boolean(errors.password)} onChange={onChange} value={value} />
+                <InputPassword
+                  isError={Boolean(errors.password)}
+                  onChange={onChange}
+                  value={value}
+                  disabled={!isEmailVerified}
+                />
               )}
             />
           </FormField>
@@ -100,9 +124,11 @@ const ChangeEmailPage: NextPage = () => {
             <Button type='button' color='gray' disabled={isSubmitting} onClick={() => router.push('./')}>
               Cancel
             </Button>
-            <Button type='submit' color='primary' disabled={!isValid || isSubmitting}>
-              Submit
-            </Button>
+            {isEmailVerified && (
+              <Button type='submit' color='primary' disabled={!isValid || isSubmitting}>
+                Submit
+              </Button>
+            )}
           </FormActions>
         </form>
       </Box>

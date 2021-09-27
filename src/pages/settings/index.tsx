@@ -1,20 +1,15 @@
 import type { NextPage } from 'next'
 import { useRouter } from 'next/router'
-import { useSelector } from 'react-redux'
 import { IoPersonCircleOutline, IoMailOutline, IoKeyOutline } from 'react-icons/io5'
-import { selectAuth } from '@/stores/auth/selector'
 import Layout from '@/components/Layout'
+import EmailVerifyMessage from '@/components/EmailVerifyMessage'
 import Styles from '@/styles/settings-index-page.style'
 import PageTitle from '@/styles/styled-components/page-title.component'
 import Box from '@/styles/styled-components/box.component'
 import Button from '@/styles/styled-components/button.component'
-import EmailVerifyMessage from '@/components/EmailVerifyMessage'
 
 const SettingsIndexPage: NextPage = () => {
   const router = useRouter()
-  const auth = useSelector(selectAuth)
-
-  if (!auth) return null
 
   return (
     <Layout title='Settings'>
@@ -33,12 +28,7 @@ const SettingsIndexPage: NextPage = () => {
             </Button>
           </li>
           <li>
-            <Button
-              color={auth.emailVerified ? 'gray' : 'secondary'}
-              type='button'
-              onClick={() => auth.emailVerified && router.push('/settings/change-email')}
-              disabled={!auth.emailVerified}
-            >
+            <Button color='gray' type='button' onClick={() => router.push('/settings/change-email')}>
               <div css={Styles.icon}>
                 <IoMailOutline />
               </div>
@@ -46,12 +36,7 @@ const SettingsIndexPage: NextPage = () => {
             </Button>
           </li>
           <li>
-            <Button
-              color={auth.emailVerified ? 'gray' : 'secondary'}
-              type='button'
-              onClick={() => auth.emailVerified && router.push('/settings/change-password')}
-              disabled={!auth.emailVerified}
-            >
+            <Button color='gray' type='button' onClick={() => router.push('/settings/change-password')}>
               <div css={Styles.icon}>
                 <IoKeyOutline />
               </div>

@@ -1,9 +1,9 @@
 import React, { useState } from 'react'
 import { IoPaperPlaneOutline } from 'react-icons/io5'
-import Message from '@/components/Message'
 import { useLoginState } from '@/hooks/auth'
-import Styles from '@/styles/email-verify-message.style'
 import { sendEmailAddressVerification } from '@/infrastructure/auth'
+import Message from '@/components/Message'
+import Styles from '@/styles/email-verify-message.style'
 
 const EmailVerifyMessage = () => {
   const { auth } = useLoginState()
@@ -27,7 +27,7 @@ const EmailVerifyMessage = () => {
   return (
     <Message level='warning'>
       <div css={Styles.content}>
-        <span>Please verify your email address</span>
+        <span>Please complete your email address verification</span>
         <button css={Styles.button} type='button' onClick={() => sendEmail()} disabled={isSent}>
           <div css={Styles.buttonIcon}>
             <IoPaperPlaneOutline />
