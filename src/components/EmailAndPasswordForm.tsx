@@ -54,7 +54,7 @@ const EmailAndPasswordForm: React.FC<Props> = ({ isSignUpMode = false }) => {
         // 新規登録
         const userCredential = await signUp(email, password)
         // メールアドレスの確認メール
-        await sendEmailAddressVerification(userCredential.user)
+        await sendEmailAddressVerification()
         // Accountドキュメントを追加
         dispatch(addAccountAction(userCredential.user.uid))
       } else {

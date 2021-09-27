@@ -1,6 +1,5 @@
 import {
   UserCredential,
-  User,
   EmailAuthProvider,
   AuthError as FirebaseAuthError,
   createUserWithEmailAndPassword,
@@ -13,6 +12,17 @@ import {
 } from 'firebase/auth'
 import { firebaseAuth } from '@/libs/firebase'
 import AuthError from '@/exceptions/AuthError'
+
+/**
+ * 現在のUserを返却する (オブジェクトが存在しない場合はエラー)
+ */
+const getCurrentUser = () => {
+  const { currentUser } = firebaseAuth
+  if (!currentUser || !currentUser.email) {
+    throw new Error('Failed to get current user')
+  }
+  return currentUser
+}
 
 /**
  * 新規登録
@@ -61,12 +71,11 @@ export const logOut = async () => {
  */
 export const changeEmailAddress = async (newEmail: string, password: string) => {
   try {
-    const currentUser = firebaseAuth.currentUser
-    if (currentUser && currentUser.email) {
+    const currentUser = getCurrentUser()
+    // 認証方法はメールアドレス/パスワード認証のみなので、必ずメールアドレスは入る
+    if (currentUser.email) {
       await reauthenticateWithCredential(currentUser, EmailAuthProvider.credential(currentUser.email, password))
       await updateEmail(currentUser, newEmail)
-    } else {
-      console.error('Failed to change your email address')
     }
   } catch (error) {
     throw new AuthError(error as FirebaseAuthError)
@@ -88,17 +97,11 @@ export const sendPasswordResetInstructions = async (email: string) => {
 
 /**
  * メールアドレスの確認のメールを送信する
- *
- * @param user
  */
-export const sendEmailAddressVerification = async (user?: User) => {
+export const sendEmailAddressVerification = async () => {
   try {
-    const currentUser = user ?? firebaseAuth.currentUser
-    if (currentUser) {
-      await sendEmailVerification(currentUser)
-    } else {
-      console.error('Failed to send an email verification')
-    }
+    const currentUser = getCurrentUser()
+    await sendEmailVerification(currentUser)
   } catch (error) {
     throw new AuthError(error as FirebaseAuthError)
   }
