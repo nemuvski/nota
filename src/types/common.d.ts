@@ -9,14 +9,6 @@ declare type Level = 'success' | 'info' | 'warning' | 'error'
 declare type Color = 'primary' | 'secondary' | 'gray'
 
 /**
- * Messageコンポーネントに表示する内容を入れておくオブジェクト
- */
-declare type MessageContent = {
-  level: Level
-  content: string
-}
-
-/**
  * Firebase Authenticationで発行されるUIDのエイリアス
  */
 declare type AuthUid = string
