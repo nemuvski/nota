@@ -18,6 +18,7 @@ import InputText from '@/styles/styled-components/input-text.component'
 import FormActions from '@/styles/styled-components/form-actions.component'
 import Button from '@/styles/styled-components/button.component'
 import Paragraph from '@/styles/styled-components/paragraph.component'
+import { useToast } from '@/hooks/toast'
 
 type FormFields = {
   newEmail: string
@@ -27,6 +28,7 @@ type FormFields = {
 const ChangeEmailPage: NextPage = () => {
   const router = useRouter()
   const auth = useSelector(selectAuth)
+  const { addToast } = useToast()
   const [messageContent, setMessageContent] = useState<MessageContent | null>(null)
   const currentEmail = auth && auth.email ? auth.email : ''
   const isEmailVerified = auth && auth.emailVerified
@@ -66,6 +68,7 @@ const ChangeEmailPage: NextPage = () => {
       // メールアドレス変更前にパスワードチェック
       await reauthenticate(password)
       await changeEmailAddress(newEmail)
+      addToast('success', 'Email address changed')
       await router.push('./')
     } catch (error: any) {
       setMessageContent({ level: 'error', content: error.message })

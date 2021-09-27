@@ -6,6 +6,7 @@ import { store } from '@/stores/store'
 import { useAuthStateChanged } from '@/hooks/auth'
 import Loading from '@/components/Loading'
 import ProtectedRoute from '@/components/ProtectedRoute'
+import ToastContainer from '@/components/ToastContainer'
 import Styles from '@/styles/global.style'
 
 import 'modern-css-reset'
@@ -50,6 +51,8 @@ const NotaApp = ({ Component, pageProps, router }: AppProps) => {
       <Global styles={Styles} />
       <Provider store={store}>
         <RootComponent />
+        <ToastContainer />
+
         <div id='portal' />
       </Provider>
     </>
