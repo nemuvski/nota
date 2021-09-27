@@ -4,7 +4,7 @@ import dayjs, { Dayjs } from 'dayjs'
 /**
  * Accountエンティティ
  */
-export type Account = {
+export interface Account {
   id: FirestoreDocumentId
   uid: AuthUid
   // ディスプレイネーム

@@ -3,7 +3,7 @@ import { User } from 'firebase/auth'
 /**
  * Firebase Authenticationで得られるUserオブジェクトの一部
  */
-export type AuthUser = {
+export interface AuthUser {
   uid: AuthUid
   email: string | null
   emailVerified: boolean
