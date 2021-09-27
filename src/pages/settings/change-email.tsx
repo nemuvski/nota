@@ -5,6 +5,7 @@ import { useSelector } from 'react-redux'
 import { Controller, useForm } from 'react-hook-form'
 import { MIN_LENGTH_PASSWORD } from '@/constants/form'
 import { selectAuth } from '@/stores/auth/selector'
+import { useToast } from '@/hooks/toast'
 import { changeEmailAddress, reauthenticate } from '@/infrastructure/auth'
 import { MessageContent } from '@/models/Message'
 import Layout from '@/components/Layout'
@@ -18,7 +19,6 @@ import InputText from '@/styles/styled-components/input-text.component'
 import FormActions from '@/styles/styled-components/form-actions.component'
 import Button from '@/styles/styled-components/button.component'
 import Paragraph from '@/styles/styled-components/paragraph.component'
-import { useToast } from '@/hooks/toast'
 
 type FormFields = {
   newEmail: string
