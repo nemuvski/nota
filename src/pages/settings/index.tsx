@@ -24,7 +24,7 @@ const SettingsIndexPage: NextPage = () => {
               <div css={Styles.icon}>
                 <IoPersonCircleOutline />
               </div>
-              <span>Change My Profile</span>
+              <span>Change Profile</span>
             </Button>
           </li>
           <li>
