@@ -2,6 +2,7 @@ import React, { useState } from 'react'
 import { useRouter } from 'next/router'
 import { Controller, useForm } from 'react-hook-form'
 import { useDispatch } from 'react-redux'
+import { useToast } from '@/hooks/toast'
 import InputPassword from '@/components/InputPassword'
 import Message from '@/components/Message'
 import { logIn, sendEmailAddressVerification, signUp } from '@/infrastructure/auth'
@@ -26,6 +27,7 @@ type FormFields = {
 const EmailAndPasswordForm: React.FC<Props> = ({ isSignUpMode = false }) => {
   const dispatch = useDispatch()
   const router = useRouter()
+  const { addToast } = useToast()
   const [messageContent, setMessageContent] = useState<MessageContent | null>(null)
 
   const {
@@ -62,6 +64,8 @@ const EmailAndPasswordForm: React.FC<Props> = ({ isSignUpMode = false }) => {
         // ログイン
         await logIn(email, password)
       }
+
+      addToast('info', 'Hey, thank you for coming!')
 
       // ログイン後はダッシュボードページに遷移
       router.push('/dashboard')
