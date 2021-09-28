@@ -249,6 +249,20 @@ describe('Account', () => {
           )
         )
       })
+      test('ドキュメントを更新できない (displayNameフィールドが許容文字数オーバー)', async () => {
+        const testUser = testEnv.authenticatedContext('user0')
+        const currentTimestamp = Timestamp.now()
+        await assertFails(
+          testUser.firestore().collection(accountCollection).doc('user0').set(
+            {
+              displayName: 'abcdefghijklmnopqrstuvwxyz',
+              avatarUrl: 'https://some-cloud-storage.org/picture.png',
+              updatedAt: currentTimestamp,
+            },
+            { merge: true }
+          )
+        )
+      })
     })
 
     describe('DELETE', () => {

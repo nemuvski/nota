@@ -13,11 +13,17 @@ service cloud.firestore {
      */
     function isValidCreatingAccount(reqUid, reqData) {
       return (
+        // フィールドチェック
         reqData.keys().hasAll(['uid', 'displayName', 'status', 'createdAt', 'updatedAt'])
+        // uidフィールドの値チェック
         && reqData.uid == reqUid
-        && reqData.displayName is string
+        // displayNameフィールドの型と値チェック
+        && reqData.displayName is string && reqData.displayName.size() <= 20
+        // statusフィールドの値チェック
         && reqData.status == 'active'
+        // createdAtフィールドの型チェック
         && reqData.createdAt is timestamp
+        // updatedAtフィールドの型チェック
         && reqData.updatedAt is timestamp
       );
     }
@@ -26,12 +32,17 @@ service cloud.firestore {
      */
     function isValidUpdatingAccount(reqUid, reqData) {
       return (
+        // フィールドチェック
         reqData.keys().hasOnly(['displayName', 'avatarUrl', 'status', 'updatedAt'])
-        // updatedAtフィールドは必須
+        // updatedAtフィールドがあるかのチェック (必須)
         && reqData.keys().hasAll(['updatedAt'])
-        && reqData.displayName is string
+        // displayNameフィールドの型と値チェック
+        && reqData.displayName is string && reqData.displayName.size() <= 20
+        // avatarUrlの型チェック
         && reqData.avatarUrl is string
+        // statusフィールドの値チェック
         && reqData.status in ['active', 'inactive']
+        // updatedAtフィールドの型チェック
         && reqData.updatedAt is timestamp
       );
     }
