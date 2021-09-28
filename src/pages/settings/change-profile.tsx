@@ -17,6 +17,7 @@ import FormActions from '@/styles/styled-components/form-actions.component'
 import Button from '@/styles/styled-components/button.component'
 import InputText from '@/styles/styled-components/input-text.component'
 import { AppDispatch } from '@/stores/store'
+import SetAvatar from '@/components/SetAvatar'
 
 type FormFields = {
   displayName: string
@@ -28,6 +29,7 @@ const ChangePasswordPage: NextPage = () => {
   const { addToast } = useToast()
   const myAccount = useSelector(selectMyAccount)
   const [messageContent, setMessageContent] = useState<MessageContent | null>(null)
+  const [imageSrc, setImageSrc] = useState<string | undefined>()
 
   const {
     register,
@@ -66,6 +68,11 @@ const ChangePasswordPage: NextPage = () => {
         {messageContent && <Message level={messageContent.level}>{messageContent.content}</Message>}
 
         <form onSubmit={handleSubmit(submit)}>
+          {/* アバター画像 (モーダル開いてアップロードフォーム表示 & トリミングができるようにする？) */}
+          <FormField>
+            <SetAvatar source={imageSrc} />
+          </FormField>
+
           <FormField>
             <label>Display name</label>
             <InputText
