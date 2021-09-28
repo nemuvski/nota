@@ -44,6 +44,11 @@ const ChangePasswordPage: NextPage = () => {
     },
   })
 
+  /**
+   * Submitボタン押下イベント
+   *
+   * @param formFields
+   */
   const submit = async (formFields: FormFields) => {
     const { currentPassword, newPassword } = formFields
 
