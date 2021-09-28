@@ -14,6 +14,22 @@ import FirestoreError from '@/exceptions/FirestoreError'
 const collectionRef = collection(firestore, PREFIX_COLLECTION_PATH, 'Account')
 
 /**
+ * Accountドキュメントを取得
+ *
+ * @param uid
+ */
+export const getAccount = async (uid: AuthUid) => {
+  try {
+    const snapshot = await getDoc(doc(collectionRef, uid))
+    const docData = snapshot.data()
+    if (!docData) return undefined
+    return buildAccount(snapshot.id, docData)
+  } catch (error) {
+    throw new FirestoreError(error as FirebaseFirestoreError)
+  }
+}
+
+/**
  * Accountドキュメントを追加（新規作成時に利用される）し、追加したドキュメントを取得
  *
  * @param uid
@@ -37,16 +53,25 @@ export const addAccount = async (uid: AuthUid, displayName = 'Incognito') => {
 }
 
 /**
- * Accountドキュメントを取得
+ * Accountドキュメントを更新
  *
  * @param uid
+ * @param displayName
+ * @param avatarUrl
  */
-export const getAccount = async (uid: AuthUid) => {
+export const updateAccount = async (uid: AuthUid, displayName: string, avatarUrl?: string) => {
+  const currentTimestamp = serverTimestamp()
   try {
-    const snapshot = await getDoc(doc(collectionRef, uid))
-    const docData = snapshot.data()
-    if (!docData) return undefined
-    return buildAccount(snapshot.id, docData)
+    await setDoc(
+      doc(collectionRef, uid),
+      {
+        displayName,
+        avatarUrl,
+        updatedAt: currentTimestamp,
+      },
+      { merge: true }
+    )
+    return await getAccount(uid)
   } catch (error) {
     throw new FirestoreError(error as FirebaseFirestoreError)
   }

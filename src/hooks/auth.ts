@@ -2,6 +2,7 @@ import { useEffect, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { onAuthStateChanged } from 'firebase/auth'
 import { firebaseAuth } from '@/libs/firebase'
+import { AppDispatch } from '@/stores/store'
 import { setAuth } from '@/stores/auth/slice'
 import { buildAuthUser } from '@/models/AuthUser'
 import { selectAuth } from '@/stores/auth/selector'
@@ -11,7 +12,7 @@ import { getAccountAction } from '@/stores/account/action'
  * Firebase Authenticationの認証状態を監視
  */
 export const useAuthStateChanged = () => {
-  const dispatch = useDispatch()
+  const dispatch = useDispatch<AppDispatch>()
   const [isProcessing, setIsProcessing] = useState(true)
 
   useEffect(() => {

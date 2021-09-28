@@ -1,8 +1,10 @@
 import type { NextPage } from 'next'
 import { useState } from 'react'
 import { useRouter } from 'next/router'
-import { useSelector } from 'react-redux'
+import { useDispatch, useSelector } from 'react-redux'
 import { selectMyAccount } from '@/stores/account/selector'
+import { updateAccountAction } from '@/stores/account/action'
+import { useToast } from '@/hooks/toast'
 import { MAX_LENGTH_DISPLAY_NAME } from '@/constants/account'
 import { MessageContent } from '@/models/Message'
 import Layout from '@/components/Layout'
@@ -14,13 +16,16 @@ import { useForm } from 'react-hook-form'
 import FormActions from '@/styles/styled-components/form-actions.component'
 import Button from '@/styles/styled-components/button.component'
 import InputText from '@/styles/styled-components/input-text.component'
+import { AppDispatch } from '@/stores/store'
 
 type FormFields = {
   displayName: string
 }
 
 const ChangePasswordPage: NextPage = () => {
+  const dispatch = useDispatch<AppDispatch>()
   const router = useRouter()
+  const { addToast } = useToast()
   const myAccount = useSelector(selectMyAccount)
   const [messageContent, setMessageContent] = useState<MessageContent | null>(null)
 
@@ -32,17 +37,22 @@ const ChangePasswordPage: NextPage = () => {
     mode: 'onChange',
     reValidateMode: 'onChange',
     defaultValues: {
-      displayName: myAccount?.displayName,
+      displayName: '',
     },
   })
 
+  /**
+   * Saveボタン押下イベント
+   *
+   * @param formFields
+   */
   const submit = async (formFields: FormFields) => {
+    if (!myAccount) return
     const { displayName } = formFields
-
     setMessageContent(null)
-
     try {
-      console.log('FIXME', displayName)
+      await dispatch(updateAccountAction({ uid: myAccount.uid, displayName })).unwrap()
+      addToast('success', 'Profile changed')
     } catch (error: any) {
       setMessageContent({ level: 'error', content: error.message })
     }

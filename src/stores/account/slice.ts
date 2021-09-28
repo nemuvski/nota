@@ -1,6 +1,6 @@
 import { createEntityAdapter, createSlice } from '@reduxjs/toolkit'
 import { Account } from '@/models/Account'
-import { addAccountAction, getAccountAction } from '@/stores/account/action'
+import { addAccountAction, getAccountAction, updateAccountAction } from '@/stores/account/action'
 
 export const accountAdapter = createEntityAdapter<Account>({
   selectId: (account) => account.id,
@@ -12,15 +12,21 @@ export const accountSlice = createSlice({
   initialState: accountAdapter.getInitialState(),
   reducers: {},
   extraReducers: (builder) => {
+    builder.addCase(getAccountAction.fulfilled, (state, action) => {
+      if (action.payload) {
+        accountAdapter.addOne(state, action.payload)
+      }
+    })
+
     builder.addCase(addAccountAction.fulfilled, (state, action) => {
       if (action.payload) {
         accountAdapter.addOne(state, action.payload)
       }
     })
 
-    builder.addCase(getAccountAction.fulfilled, (state, action) => {
+    builder.addCase(updateAccountAction.fulfilled, (state, action) => {
       if (action.payload) {
-        accountAdapter.addOne(state, action.payload)
+        accountAdapter.updateOne(state, { id: action.payload.id, changes: action.payload })
       }
     })
   },

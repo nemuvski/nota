@@ -1,18 +1,18 @@
 import { createAsyncThunk } from '@reduxjs/toolkit'
-import { addAccount, getAccount } from '@/infrastructure/account'
+import { addAccount, getAccount, updateAccount } from '@/infrastructure/account'
 
-export const addAccountAction = createAsyncThunk('account/addAccount', async (uid: AuthUid, { rejectWithValue }) => {
-  try {
-    return await addAccount(uid)
-  } catch (error) {
-    return rejectWithValue(error)
-  }
+export const getAccountAction = createAsyncThunk('account/getAccount', async (uid: AuthUid) => {
+  return await getAccount(uid)
 })
 
-export const getAccountAction = createAsyncThunk('account/getAccount', async (uid: AuthUid, { rejectWithValue }) => {
-  try {
-    return await getAccount(uid)
-  } catch (error) {
-    return rejectWithValue(error)
-  }
+export const addAccountAction = createAsyncThunk('account/addAccount', async (uid: AuthUid) => {
+  return await addAccount(uid)
 })
+
+export const updateAccountAction = createAsyncThunk(
+  'account/updateAccount',
+  async (params: { uid: AuthUid; displayName: string; avatarUrl?: string }) => {
+    const { uid, displayName, avatarUrl } = params
+    return await updateAccount(uid, displayName, avatarUrl)
+  }
+)
