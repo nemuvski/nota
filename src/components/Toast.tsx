@@ -1,5 +1,6 @@
 import React from 'react'
 import { useDispatch, useSelector } from 'react-redux'
+import { AppDispatch } from '@/stores/store'
 import { selectToast } from '@/stores/toast/selector'
 import {
   IoCheckmarkCircleOutline,
@@ -17,7 +18,7 @@ type Props = {
 }
 
 const Toast: React.FC<Props> = ({ toastId }) => {
-  const dispatch = useDispatch()
+  const dispatch = useDispatch<AppDispatch>()
   const toast = useSelector(selectToast(toastId))
 
   // 時間経過後にストアから削除

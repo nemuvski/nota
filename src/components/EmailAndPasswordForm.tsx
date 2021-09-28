@@ -6,6 +6,7 @@ import { useToast } from '@/hooks/toast'
 import InputPassword from '@/components/InputPassword'
 import Message from '@/components/Message'
 import { logIn, sendEmailAddressVerification, signUp } from '@/infrastructure/auth'
+import { AppDispatch } from '@/stores/store'
 import { addAccountAction } from '@/stores/account/action'
 import { MessageContent } from '@/models/Message'
 import Button from '@/styles/styled-components/button.component'
@@ -25,7 +26,7 @@ type FormFields = {
 }
 
 const EmailAndPasswordForm: React.FC<Props> = ({ isSignUpMode = false }) => {
-  const dispatch = useDispatch()
+  const dispatch = useDispatch<AppDispatch>()
   const router = useRouter()
   const { addToast } = useToast()
   const [messageContent, setMessageContent] = useState<MessageContent | null>(null)
