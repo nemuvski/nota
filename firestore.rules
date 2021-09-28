@@ -36,10 +36,6 @@ service cloud.firestore {
         reqData.keys().hasAll(['updatedAt'])
         // displayNameフィールドの型と値チェック
         && reqData.displayName is string && reqData.displayName.size() <= 20
-        // avatarUrlの型チェック
-        && reqData.avatarUrl is string
-        // statusフィールドの値チェック
-        && reqData.status in ['active', 'inactive']
         // updatedAtフィールドの型チェック
         && reqData.updatedAt is timestamp
       );

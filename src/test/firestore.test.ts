@@ -211,17 +211,6 @@ describe('Account', () => {
           )
         )
       })
-      test('ドキュメントを更新できない (必須項目がない)', async () => {
-        const testUser = testEnv.authenticatedContext('user0')
-        await assertFails(
-          testUser.firestore().collection(accountCollection).doc('user0').set(
-            {
-              displayName: 'Green',
-            },
-            { merge: true }
-          )
-        )
-      })
       test('ドキュメントを更新できない (型不一致)', async () => {
         const testUser = testEnv.authenticatedContext('user0')
         await assertFails(
