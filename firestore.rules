@@ -30,7 +30,7 @@ service cloud.firestore {
     /**
      * UpdateリクエストのAccountデータが正しい場合は許可
      */
-    function isValidUpdatingAccount(reqUid, reqData) {
+    function isValidUpdatingAccount(reqData) {
       return (
         // フィールドチェック
         reqData.keys().hasOnly(['displayName', 'avatarUrl', 'status', 'updatedAt'])
@@ -55,7 +55,7 @@ service cloud.firestore {
         allow get: if resource.data.status == 'active';
         allow list: if resource.data.status == 'active';
         allow create: if isAuthorized() && docId == request.auth.uid && isValidCreatingAccount(request.auth.uid, request.resource.data);
-        allow update: if isAuthorized() && docId == request.auth.uid && isValidUpdatingAccount(request.auth.uid, request.resource.data);
+        allow update: if isAuthorized() && docId == request.auth.uid && isValidUpdatingAccount(request.resource.data);
         allow delete: if false;
       }
     }
