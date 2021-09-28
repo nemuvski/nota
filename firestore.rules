@@ -32,10 +32,8 @@ service cloud.firestore {
      */
     function isValidUpdatingAccount(reqData) {
       return (
-        // フィールドチェック
-        reqData.keys().hasOnly(['displayName', 'avatarUrl', 'status', 'updatedAt'])
         // updatedAtフィールドがあるかのチェック (必須)
-        && reqData.keys().hasAll(['updatedAt'])
+        reqData.keys().hasAll(['updatedAt'])
         // displayNameフィールドの型と値チェック
         && reqData.displayName is string && reqData.displayName.size() <= 20
         // avatarUrlの型チェック

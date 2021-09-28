@@ -222,20 +222,6 @@ describe('Account', () => {
           )
         )
       })
-      test('ドキュメントを更新できない (更新できない項目が存在する)', async () => {
-        const testUser = testEnv.authenticatedContext('user0')
-        const currentTimestamp = Timestamp.now()
-        await assertFails(
-          testUser.firestore().collection(accountCollection).doc('user0').set(
-            {
-              displayName: 'Green',
-              createdAt: currentTimestamp,
-              updatedAt: currentTimestamp,
-            },
-            { merge: true }
-          )
-        )
-      })
       test('ドキュメントを更新できない (型不一致)', async () => {
         const testUser = testEnv.authenticatedContext('user0')
         await assertFails(
