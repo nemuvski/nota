@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useMemo } from 'react'
 import { useDropzone } from 'react-dropzone'
 import { ACCEPT_FILE_FORMAT, MAX_NUM_FILES, MAX_SIZE_FILE, MEGA_BYTES } from '@/constants/file'
 import Styles from '@/styles/file-dropzone.style'
@@ -16,8 +16,12 @@ const FileDropzone: React.FC<Props> = ({ dropAction }) => {
     onDrop: (acceptedFiles: Array<File>) => dropAction(acceptedFiles.pop()),
   })
 
+  const rootStyles = useMemo(() => {
+    return [Styles.root, Styles.rootVariant(isDragAccept, isDragReject)]
+  }, [isDragAccept, isDragReject])
+
   return (
-    <div css={[Styles.root, Styles.rootVariant(isDragAccept, isDragReject)]} {...getRootProps()}>
+    <div css={rootStyles} {...getRootProps()}>
       <input {...getInputProps()} />
       <p>
         {"Drag 'n' drop a file here, or click to select a file."}
