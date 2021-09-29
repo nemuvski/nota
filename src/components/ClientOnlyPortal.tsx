@@ -1,14 +1,13 @@
-import React, { useEffect, useRef } from 'react'
+import React from 'react'
 import { createPortal } from 'react-dom'
+import { isBrowser } from '@/utils/environment'
 
 const ClientOnlyPortal: React.FC = ({ children }) => {
-  const ref = useRef<HTMLElement | null>(null)
-
-  useEffect(() => {
-    ref.current = document.getElementById('portal')
-  }, [])
-
-  return ref.current ? createPortal(children, ref.current) : null
+  let ref: HTMLElement | null = null
+  if (isBrowser()) {
+    ref = document.getElementById('__next')
+  }
+  return ref ? createPortal(children, ref) : null
 }
 
 export default ClientOnlyPortal
