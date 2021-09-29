@@ -52,8 +52,6 @@ const NotaApp = ({ Component, pageProps, router }: AppProps) => {
       <Provider store={store}>
         <RootComponent />
         <ToastContainer />
-
-        <div id='portal' />
       </Provider>
     </>
   )
