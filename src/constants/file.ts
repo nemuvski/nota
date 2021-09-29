@@ -1,5 +1,5 @@
 /**
- * 1MB = 1024 * 1024
+ * 1MB = 1024 * 1024 [bytes]
  */
 export const MEGA_BYTES = 1048576
 
@@ -14,7 +14,6 @@ export const ACCEPT_FILE_FORMAT = 'image/png,image/jpeg'
 export const MAX_NUM_FILES = 1
 
 /**
- * 許可するファイルサイズ [bytes]
- * 1024 * 1024
+ * 許可するファイルサイズ
  */
 export const MAX_SIZE_FILE = MEGA_BYTES
