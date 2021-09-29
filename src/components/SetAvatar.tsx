@@ -1,5 +1,5 @@
 import React, { useState } from 'react'
-import Modal from '@/components/Modal'
+import SetAvatarModal from '@/components/SetAvatarModal'
 import Avatar from '@/styles/styled-components/avatar.component'
 import Styles from '@/styles/set-avatar.style'
 
@@ -8,18 +8,16 @@ type Props = {
 }
 
 const SetAvatar: React.FC<Props> = ({ source }) => {
-  const [isModalOpened, setIsModalOpened] = useState(false)
+  const [isOpenModal, setIsOpenModal] = useState(false)
 
-  // TODO: デフォルト画像を表示するようにする
   if (!source) return null
 
   return (
     <>
       <div css={Styles.root}>
-        <Avatar css={Styles.image} src={source} onClick={() => setIsModalOpened(true)} />
+        <Avatar css={Styles.image} src={source} onClick={() => setIsOpenModal(true)} />
       </div>
-
-      {isModalOpened && <Modal closeAction={() => setIsModalOpened(false)} />}
+      {isOpenModal && <SetAvatarModal closeAction={() => setIsOpenModal(false)} />}
     </>
   )
 }
