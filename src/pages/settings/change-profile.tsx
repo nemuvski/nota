@@ -2,12 +2,14 @@ import type { NextPage } from 'next'
 import { useState } from 'react'
 import { useRouter } from 'next/router'
 import { useDispatch, useSelector } from 'react-redux'
+import { AppDispatch } from '@/stores/store'
 import { selectMyAccount } from '@/stores/account/selector'
 import { updateAccountAction } from '@/stores/account/action'
 import { useToast } from '@/hooks/toast'
 import { MAX_LENGTH_DISPLAY_NAME } from '@/constants/account'
 import { MessageContent } from '@/models/Message'
 import Layout from '@/components/Layout'
+import SetAvatar from '@/components/SetAvatar'
 import PageTitle from '@/styles/styled-components/page-title.component'
 import Box from '@/styles/styled-components/box.component'
 import Message from '@/components/Message'
@@ -16,8 +18,6 @@ import { useForm } from 'react-hook-form'
 import FormActions from '@/styles/styled-components/form-actions.component'
 import Button from '@/styles/styled-components/button.component'
 import InputText from '@/styles/styled-components/input-text.component'
-import { AppDispatch } from '@/stores/store'
-import SetAvatar from '@/components/SetAvatar'
 
 type FormFields = {
   displayName: string
@@ -29,7 +29,7 @@ const ChangePasswordPage: NextPage = () => {
   const { addToast } = useToast()
   const myAccount = useSelector(selectMyAccount)
   const [messageContent, setMessageContent] = useState<MessageContent | null>(null)
-  const [imageSrc, setImageSrc] = useState<string | undefined>()
+  const [imageSrc] = useState<string | undefined>('https://via.placeholder.com/400')
 
   const {
     register,
@@ -68,7 +68,6 @@ const ChangePasswordPage: NextPage = () => {
         {messageContent && <Message level={messageContent.level}>{messageContent.content}</Message>}
 
         <form onSubmit={handleSubmit(submit)}>
-          {/* アバター画像 (モーダル開いてアップロードフォーム表示 & トリミングができるようにする？) */}
           <FormField>
             <SetAvatar source={imageSrc} />
           </FormField>

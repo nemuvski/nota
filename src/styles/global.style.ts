@@ -9,6 +9,7 @@ const palette = css`
   :root {
     --color-back: rgb(255, 255, 255);
     --color-text: rgb(0, 0, 0);
+    --color-overlay: rgba(0, 0, 0, 0.3);
     --color-gray-dark: rgb(210, 210, 210);
     --color-gray-main: rgb(238, 238, 238);
     --color-gray-light: rgb(248, 248, 248);
