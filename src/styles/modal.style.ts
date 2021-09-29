@@ -10,7 +10,7 @@ const root = css`
   overflow: hidden auto;
   display: flex;
   align-items: center;
-  padding: 0.75rem;
+  padding: 3rem 0.75rem;
   background-color: var(--color-overlay);
 `
 

@@ -7,20 +7,20 @@ type Props = {
   closeAction: () => void
 }
 
-const Modal: React.FC<Props> = ({ children, closeAction }) => {
-  return (
-    <ClientOnlyPortal>
-      <div css={Styles.root} onClick={() => closeAction()}>
-        <div css={Styles.inner} onClick={(event) => event.stopPropagation()}>
-          <div css={Styles.close}>
-            <IoCloseSharp css={Styles.icon} />
-            Close
-          </div>
-          <div css={Styles.content}>{children}</div>
+const Modal: React.FC<Props> = ({ children, closeAction }) => (
+  <ClientOnlyPortal>
+    <div css={Styles.root} onClick={() => closeAction()}>
+      <div css={Styles.inner}>
+        <div css={Styles.close}>
+          <IoCloseSharp css={Styles.icon} />
+          Close
+        </div>
+        <div css={Styles.content} onClick={(event) => event.stopPropagation()}>
+          {children}
         </div>
       </div>
-    </ClientOnlyPortal>
-  )
-}
+    </div>
+  </ClientOnlyPortal>
+)
 
 export default Modal
