@@ -4,6 +4,7 @@
   "license": "ISC",
   "scripts": {
     "dev": "next dev",
+    "clean": "rimraf .next out",
     "build": "next build",
     "build:analyze": "ANALYZE=1 next build",
     "start": "next start",
