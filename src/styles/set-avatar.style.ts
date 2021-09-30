@@ -7,8 +7,8 @@ const root = css`
 `
 
 const image = css`
-  width: 100%;
-  max-width: 16rem;
+  width: 16rem;
+  height: 16rem;
   cursor: pointer;
 `
 

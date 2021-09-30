@@ -1,6 +1,7 @@
 import type { NextPage } from 'next'
 import { useState } from 'react'
 import { useRouter } from 'next/router'
+import { useForm } from 'react-hook-form'
 import { useDispatch, useSelector } from 'react-redux'
 import { AppDispatch } from '@/stores/store'
 import { selectMyAccount } from '@/stores/account/selector'
@@ -14,7 +15,6 @@ import PageTitle from '@/styles/styled-components/page-title.component'
 import Box from '@/styles/styled-components/box.component'
 import Message from '@/components/Message'
 import FormField from '@/styles/styled-components/form-field.component'
-import { useForm } from 'react-hook-form'
 import FormActions from '@/styles/styled-components/form-actions.component'
 import Button from '@/styles/styled-components/button.component'
 import InputText from '@/styles/styled-components/input-text.component'
@@ -29,7 +29,7 @@ const ChangePasswordPage: NextPage = () => {
   const { addToast } = useToast()
   const myAccount = useSelector(selectMyAccount)
   const [messageContent, setMessageContent] = useState<MessageContent | null>(null)
-  const [imageSrc] = useState<string | undefined>('https://via.placeholder.com/400')
+  const [imageSrc] = useState<string | undefined>(myAccount?.avatarUrl)
 
   const {
     register,

@@ -16,12 +16,11 @@ const SetAvatar: React.FC<Props> = ({ source }) => {
   const [isOpenModal, setIsOpenModal] = useState(false)
   const [selectedFile, setSelectedFile] = useState<File | undefined>()
 
-  if (!source) return null
-
   return (
     <>
       <div css={Styles.root}>
         <Avatar css={Styles.image} src={source} onClick={() => setIsOpenModal(true)} />
+
         <div css={Styles.editIconWrapper}>
           <IoCameraReverse css={Styles.editIcon} />
         </div>
