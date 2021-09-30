@@ -29,7 +29,7 @@ const ChangePasswordPage: NextPage = () => {
   const { addToast } = useToast()
   const myAccount = useSelector(selectMyAccount)
   const [messageContent, setMessageContent] = useState<MessageContent | null>(null)
-  const [imageSrc] = useState<string | undefined>(myAccount?.avatarUrl)
+  const [uploadingImage, setUploadingImage] = useState<Blob | undefined>(undefined)
 
   const {
     register,
@@ -69,7 +69,11 @@ const ChangePasswordPage: NextPage = () => {
 
         <form onSubmit={handleSubmit(submit)}>
           <FormField>
-            <SetAvatar source={imageSrc} />
+            <SetAvatar
+              avatarUrl={myAccount?.avatarUrl}
+              uploadingImageData={uploadingImage}
+              setUploadingImageData={(data) => setUploadingImage(data)}
+            />
           </FormField>
 
           <FormField>

@@ -1,29 +1,39 @@
 import React, { useCallback, useMemo, useState } from 'react'
 import Cropper from 'react-easy-crop'
-import { Point } from 'react-easy-crop/types'
+import { Area, Point } from 'react-easy-crop/types'
 import Styles from '@/styles/image-cropper.style'
 
 type Props = {
-  imageSource: string
-  aspect: number
+  imageSource: File
+  setCroppedAreaPixels: (area: Area) => void
+  aspect?: number
   isCropRoundShape?: boolean
   containerHeight?: number
 }
 
-const ImageCropper: React.FC<Props> = ({ imageSource, aspect, isCropRoundShape = false, containerHeight = 300 }) => {
+const ImageCropper: React.FC<Props> = ({
+  imageSource,
+  setCroppedAreaPixels,
+  aspect = 1,
+  isCropRoundShape = false,
+  containerHeight = 300,
+}) => {
   const [crop, onCropChange] = useState<Point>({ x: 0, y: 0 })
   const [zoom, onZoomChange] = useState(1)
 
-  const onCropComplete = useCallback((croppedArea, croppedAreaPixels) => {
-    console.log(croppedArea, croppedAreaPixels)
-  }, [])
+  const onCropComplete = useCallback(
+    (croppedArea: Area, croppedAreaPixels: Area) => {
+      setCroppedAreaPixels(croppedAreaPixels)
+    },
+    [setCroppedAreaPixels]
+  )
 
   const rootStyles = useMemo(() => [Styles.root, Styles.setContainerHeight(containerHeight)], [containerHeight])
 
   return (
     <div css={rootStyles}>
       <Cropper
-        image={imageSource}
+        image={URL.createObjectURL(imageSource)}
         crop={crop}
         onCropChange={onCropChange}
         onCropComplete={onCropComplete}
