@@ -61,8 +61,8 @@ const ChangePasswordPage: NextPage = () => {
   }
 
   return (
-    <Layout title='Change Password'>
-      <PageTitle>Change profile</PageTitle>
+    <Layout title='Change Profile'>
+      <PageTitle>Change Profile</PageTitle>
 
       <Box>
         {messageContent && <Message level={messageContent.level}>{messageContent.content}</Message>}
