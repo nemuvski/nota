@@ -46,8 +46,7 @@ service cloud.firestore {
        * Accountコレクション
        */
       match /Account/{docId} {
-        allow get: if resource.data.status == 'active';
-        allow list: if resource.data.status == 'active';
+        allow get, list: if resource.data.status == 'active';
         allow create: if isAuthorized() && docId == request.auth.uid && isValidCreatingAccount(request.auth.uid, request.resource.data);
         allow update: if isAuthorized() && docId == request.auth.uid && isValidUpdatingAccount(request.resource.data);
         allow delete: if false;
