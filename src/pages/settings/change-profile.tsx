@@ -1,5 +1,5 @@
 import type { NextPage } from 'next'
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import { useRouter } from 'next/router'
 import { useForm } from 'react-hook-form'
 import { useDispatch, useSelector } from 'react-redux'
@@ -33,6 +33,7 @@ const ChangePasswordPage: NextPage = () => {
   const [uploadingImage, setUploadingImage] = useState<Blob | undefined>(undefined)
 
   const {
+    setValue,
     register,
     handleSubmit,
     formState: { errors, isSubmitting, isValid },
@@ -40,9 +41,13 @@ const ChangePasswordPage: NextPage = () => {
     mode: 'onChange',
     reValidateMode: 'onChange',
     defaultValues: {
-      displayName: '',
+      displayName: myAccount?.displayName ?? '',
     },
   })
+
+  useEffect(() => {
+    if (myAccount) setValue('displayName', myAccount.displayName)
+  }, [setValue, myAccount])
 
   /**
    * Saveボタン押下イベント
