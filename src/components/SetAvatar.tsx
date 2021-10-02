@@ -1,4 +1,4 @@
-import React, { useCallback, useMemo, useState } from 'react'
+import React, { useCallback, useEffect, useMemo, useState } from 'react'
 import { Area } from 'react-easy-crop/types'
 import { IoCameraReverse } from 'react-icons/io5'
 import Modal from '@/components/Modal'
@@ -22,6 +22,15 @@ const SetAvatar: React.FC<Props> = ({ avatarUrl, uploadingImageData, setUploadin
   const [selectedFile, setSelectedFile] = useState<File | undefined>()
   // 切り出す領域
   const [croppedAreaPixels, setCroppedAreaPixels] = useState<Area | null>(null)
+
+  /**
+   * uploadingImageDataが更新され、内容が空の場合は選択中の画像ファイルをクリア
+   */
+  useEffect(() => {
+    if (!uploadingImageData) {
+      setSelectedFile(undefined)
+    }
+  }, [uploadingImageData])
 
   /**
    * 画像を切り出す

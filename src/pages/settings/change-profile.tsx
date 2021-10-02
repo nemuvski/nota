@@ -18,6 +18,7 @@ import FormField from '@/styles/styled-components/form-field.component'
 import FormActions from '@/styles/styled-components/form-actions.component'
 import Button from '@/styles/styled-components/button.component'
 import InputText from '@/styles/styled-components/input-text.component'
+import { uploadAvatarImage } from '@/infrastructure/storage/account'
 
 type FormFields = {
   displayName: string
@@ -52,8 +53,19 @@ const ChangePasswordPage: NextPage = () => {
     if (!myAccount) return
     const { displayName } = formFields
     setMessageContent(null)
+
     try {
-      await dispatch(updateAccountAction({ uid: myAccount.uid, displayName })).unwrap()
+      let uploadedAvatarImageUrl: string | undefined
+      // ファイル選択がされている場合のみアップロード
+      if (uploadingImage) {
+        uploadedAvatarImageUrl = await uploadAvatarImage(myAccount.uid, uploadingImage)
+        addToast('success', 'Avatar image uploaded')
+        // アップロード後はローカルデータはクリア
+        setUploadingImage(undefined)
+      }
+      await dispatch(
+        updateAccountAction({ uid: myAccount.uid, displayName, avatarUrl: uploadedAvatarImageUrl })
+      ).unwrap()
       addToast('success', 'Profile changed')
     } catch (error: any) {
       setMessageContent({ level: 'error', content: error.message })
