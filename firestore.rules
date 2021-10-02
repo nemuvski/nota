@@ -3,41 +3,41 @@ rules_version = '2';
 service cloud.firestore {
   match /databases/{database}/documents {
     /**
-     * 認証済みなら許可
+     * 自身のファイルの場合のみ許可
      */
-    function isAuthorized() {
-      return request.auth != null;
+    function isOwnResource(uid) {
+      return (request.auth != null && uid == request.auth.uid);
     }
     /**
      * CreateリクエストのAccountデータが正しい場合は許可
      */
-    function isValidCreatingAccount(reqUid, reqData) {
+    function isValidCreatingAccount() {
       return (
         // フィールドチェック
-        reqData.keys().hasAll(['uid', 'displayName', 'status', 'createdAt', 'updatedAt'])
+        request.resource.data.keys().hasAll(['uid', 'displayName', 'status', 'createdAt', 'updatedAt'])
         // uidフィールドの値チェック
-        && reqData.uid == reqUid
+        && request.resource.data.uid == request.auth.uid
         // displayNameフィールドの型と値チェック
-        && reqData.displayName is string && reqData.displayName.size() <= 20
+        && request.resource.data.displayName is string && request.resource.data.displayName.size() <= 20
         // statusフィールドの値チェック
-        && reqData.status == 'active'
+        && request.resource.data.status == 'active'
         // createdAtフィールドの型チェック
-        && reqData.createdAt is timestamp
+        && request.resource.data.createdAt is timestamp
         // updatedAtフィールドの型チェック
-        && reqData.updatedAt is timestamp
+        && request.resource.data.updatedAt is timestamp
       );
     }
     /**
      * UpdateリクエストのAccountデータが正しい場合は許可
      */
-    function isValidUpdatingAccount(reqData) {
+    function isValidUpdatingAccount() {
       return (
         // updatedAtフィールドがあるかのチェック (必須)
-        reqData.keys().hasAll(['updatedAt'])
+        request.resource.data.keys().hasAll(['updatedAt'])
         // displayNameフィールドの型と値チェック
-        && reqData.displayName is string && reqData.displayName.size() <= 20
+        && request.resource.data.displayName is string && request.resource.data.displayName.size() <= 20
         // updatedAtフィールドの型チェック
-        && reqData.updatedAt is timestamp
+        && request.resource.data.updatedAt is timestamp
       );
     }
 
@@ -46,9 +46,10 @@ service cloud.firestore {
        * Accountコレクション
        */
       match /Account/{docId} {
-        allow get, list: if resource.data.status == 'active';
-        allow create: if isAuthorized() && docId == request.auth.uid && isValidCreatingAccount(request.auth.uid, request.resource.data);
-        allow update: if isAuthorized() && docId == request.auth.uid && isValidUpdatingAccount(request.resource.data);
+        allow get: if resource.data.status == 'active';
+        allow list: if resource.data.status == 'active';
+        allow create: if isOwnResource(docId) && isValidCreatingAccount();
+        allow update: if isOwnResource(docId) && isValidUpdatingAccount();
         allow delete: if false;
       }
     }

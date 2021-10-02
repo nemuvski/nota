@@ -6,15 +6,19 @@ service firebase.storage {
      * 自身のファイルの場合のみ許可
      */
     function isOwnResource(uid) {
-      return request.auth != null
-             && uid == request.auth.uid;
+      return (
+        request.auth != null
+        && uid == request.auth.uid
+      );
     }
     /**
      * リクエストのリソースのSize,ContentTypeをチェック
      */
     function isValidFileFormat() {
-      return request.resource.size <= 1024 * 1024
-             && request.resource.contentType.matches('image/(jpeg|png)');
+      return (
+        request.resource.size <= 1024 * 1024
+        && request.resource.contentType.matches('image/(jpeg|png)')
+      );
     }
 
     match /v0 {
