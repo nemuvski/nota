@@ -12,7 +12,8 @@
     "lint": "next lint --dir src",
     "format": "prettier --check --ignore-path .gitignore './**/*.{js,jsx,ts,tsx}'",
     "format:fix": "prettier --write --ignore-path .gitignore './**/*.{js,jsx,ts,tsx}'",
-    "deploy:firestore:rules": "firebase deploy --only firestore:rules"
+    "deploy:firestore:rules": "firebase deploy --only firestore:rules",
+    "deploy:storage:rules": "firebase deploy --only storage:rules"
   },
   "dependencies": {
     "@emotion/react": "^11.4.1",
