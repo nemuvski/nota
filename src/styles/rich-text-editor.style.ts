@@ -5,9 +5,15 @@ const root = css`
 `
 
 const actions = css`
-  margin: 0 0 0.75rem;
+  display: flex;
+  align-items: center;
+  margin: 0.75rem 0;
   padding: 0;
   list-style-type: none;
+
+  > li:not(:last-of-type) {
+    margin-right: 0.5rem;
+  }
 `
 
 const editor = css`

@@ -1,7 +1,8 @@
 import React, { useCallback, useState } from 'react'
 import { Editor, EditorState, DraftEditorCommand, DraftHandleValue, convertToRaw, RichUtils } from 'draft-js'
+import { AiOutlineUnderline, AiOutlineBold, AiOutlineItalic } from 'react-icons/ai'
 import Styles from '@/styles/rich-text-editor.style'
-import Button from '@/styles/styled-components/button.component'
+import RichTextActionButton from '@/styles/styled-components/rich-text-action-button.component'
 
 const RichTextEditor = ({ ...props }) => {
   const [editorState, setEditorState] = useState(EditorState.createEmpty())
@@ -32,37 +33,31 @@ const RichTextEditor = ({ ...props }) => {
     <div css={Styles.root}>
       <ul css={Styles.actions}>
         <li>
-          <Button
-            type='button'
-            color='gray'
+          <RichTextActionButton
             onClick={() => {
               handleEditorStateChange(RichUtils.toggleInlineStyle(editorState, 'UNDERLINE'))
             }}
           >
-            U
-          </Button>
+            <AiOutlineUnderline />
+          </RichTextActionButton>
         </li>
         <li>
-          <Button
-            type='button'
-            color='gray'
+          <RichTextActionButton
             onClick={() => {
               handleEditorStateChange(RichUtils.toggleInlineStyle(editorState, 'BOLD'))
             }}
           >
-            B
-          </Button>
+            <AiOutlineBold />
+          </RichTextActionButton>
         </li>
         <li>
-          <Button
-            type='button'
-            color='gray'
+          <RichTextActionButton
             onClick={() => {
               handleEditorStateChange(RichUtils.toggleInlineStyle(editorState, 'ITALIC'))
             }}
           >
-            I
-          </Button>
+            <AiOutlineItalic />
+          </RichTextActionButton>
         </li>
       </ul>
       <div css={[Styles.editor, Styles.draftEditorStyles]}>
