@@ -32,7 +32,7 @@ export const buildAccount = (docId: FirestoreDocumentId, docData: DocumentData):
  * Accountエンティティの有効/無効
  */
 export const AccountStatus = {
-  active: 'active',
-  inactive: 'inactive',
+  Active: 'active',
+  Inactive: 'inactive',
 } as const
 export type AccountStatusType = typeof AccountStatus[keyof typeof AccountStatus]

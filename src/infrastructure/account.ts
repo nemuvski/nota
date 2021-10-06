@@ -42,7 +42,7 @@ export const addAccount = async (uid: AuthUid, displayName = 'Incognito') => {
     await setDoc(doc(collectionRef, uid), {
       uid,
       displayName,
-      status: AccountStatus.active,
+      status: AccountStatus.Active,
       createdAt: currentTimestamp,
       updatedAt: currentTimestamp,
     })
