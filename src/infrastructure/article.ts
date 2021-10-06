@@ -7,12 +7,11 @@ import {
   getDocs,
   query,
   where,
-  orderBy,
   serverTimestamp,
 } from 'firebase/firestore'
 import { firestore } from '@/libs/firebase'
 import { PREFIX_COLLECTION_PATH } from '@/constants/firestore'
-import { ArticleStatusType, buildArticle } from '@/models/Article'
+import { ArticleStatus, ArticleStatusType, buildArticle } from '@/models/Article'
 import FirestoreError from '@/exceptions/FirestoreError'
 import { RawDraftContentState } from 'draft-js'
 import { jsonStringify } from '@/utils/json'
@@ -43,7 +42,11 @@ export const getArticle = async (id: FirestoreDocumentId) => {
 export const getArticlesByOwnerUid = async (ownerUid: AuthUid) => {
   try {
     const snapshot = await getDocs(
-      query(collectionRef, where('ownerUid', '==', ownerUid), orderBy('updatedAt', 'desc'))
+      query(
+        collectionRef,
+        where('ownerUid', '==', ownerUid),
+        where('status', 'in', [ArticleStatus.Published, ArticleStatus.Draft])
+      )
     )
     return snapshot.docs.map((d) => buildArticle(d.id, d.data()))
   } catch (error) {
