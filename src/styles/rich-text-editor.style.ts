@@ -1,4 +1,5 @@
 import { css } from '@emotion/react'
+import { bp, Breakpoint } from '@/styles/mixins/breakpoints.mixin'
 
 const root = css`
   width: 100%;
@@ -6,13 +7,18 @@ const root = css`
 
 const actions = css`
   display: flex;
+  flex-wrap: wrap;
   align-items: center;
-  margin: 0.75rem 0;
+  margin: 0.75rem 0 0.25rem;
   padding: 0;
   list-style-type: none;
 
-  > li:not(:last-of-type) {
-    margin-right: 0.5rem;
+  > li {
+    margin-bottom: 0.5rem;
+
+    &:not(:last-of-type) {
+      margin-right: 0.5rem;
+    }
   }
 `
 
@@ -28,10 +34,14 @@ const editor = css`
 const draftEditorStyles = css`
   .DraftEditor-root {
     width: 100%;
-    height: 12rem;
+    height: 16rem;
     // フォントサイズは固定
     font-size: 16px;
     line-height: 1.6;
+
+    ${bp(Breakpoint.M_MIN)} {
+      height: 24rem;
+    }
   }
 `
 

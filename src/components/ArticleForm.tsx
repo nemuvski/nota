@@ -2,7 +2,7 @@ import React, { useState } from 'react'
 import { useRouter } from 'next/router'
 import { Controller, useForm } from 'react-hook-form'
 import { RawDraftContentState } from 'draft-js'
-import { MAX_LENGTH_TITLE } from '@/constants/article'
+import { INITIAL_BODY_CONTENT, MAX_LENGTH_TITLE } from '@/constants/article'
 import Message from '@/components/Message'
 import RichTextEditor from '@/components/RichTextEditor'
 import { MessageContent } from '@/models/Message'
@@ -30,7 +30,7 @@ const ArticleForm: React.FC = () => {
     reValidateMode: 'onChange',
     defaultValues: {
       title: '',
-      // TODO: 編集時にbodyの初期値を指定
+      body: INITIAL_BODY_CONTENT,
     },
   })
 
