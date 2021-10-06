@@ -30,7 +30,7 @@ export const getAccount = async (uid: AuthUid) => {
 }
 
 /**
- * Accountドキュメントを追加（新規作成時に利用される）し、追加したドキュメントを取得
+ * Accountドキュメントを追加し、追加したドキュメントを取得
  *
  * @param uid
  * @param displayName
