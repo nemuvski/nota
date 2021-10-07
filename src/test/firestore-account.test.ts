@@ -70,11 +70,11 @@ describe('Account', () => {
    */
   describe('Unauthorized User', () => {
     describe('GET', () => {
-      test('「active」なドキュメントを取得できる', async () => {
+      test('「active」のドキュメントを取得できる', async () => {
         const anonymous = testEnv.unauthenticatedContext()
         await assertSucceeds(anonymous.firestore().collection(accountCollection).doc('user0').get())
       })
-      test('「inactive」なドキュメントを取得できない', async () => {
+      test('「inactive」のドキュメントを取得できない', async () => {
         const anonymous = testEnv.unauthenticatedContext()
         await assertFails(anonymous.firestore().collection(accountCollection).doc('user1').get())
       })
@@ -115,11 +115,11 @@ describe('Account', () => {
    */
   describe('Authorized User', () => {
     describe('GET', () => {
-      test('「active」なドキュメントを取得できる', async () => {
+      test('「active」のドキュメントを取得できる', async () => {
         const testUser = testEnv.authenticatedContext('testUser')
         await assertSucceeds(testUser.firestore().collection(accountCollection).doc('user0').get())
       })
-      test('「inactive」なドキュメントを取得できない', async () => {
+      test('「inactive」のドキュメントを取得できない', async () => {
         const testUser = testEnv.authenticatedContext('testUser')
         await assertFails(testUser.firestore().collection(accountCollection).doc('user1').get())
       })
