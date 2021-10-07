@@ -7,7 +7,7 @@ import {
 } from '@firebase/rules-unit-testing'
 import { Timestamp } from 'firebase/firestore'
 
-const projectId = 'my-test-project'
+const projectId = 'account-collection-test-project'
 let testEnv: RulesTestEnvironment
 
 const accountCollection = `/NotaApp/v0/Account`
