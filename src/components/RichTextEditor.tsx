@@ -2,11 +2,13 @@ import React, { useCallback, useState } from 'react'
 import {
   Editor,
   EditorState,
+  RichUtils,
   DraftEditorCommand,
   DraftHandleValue,
   DraftBlockType,
+  RawDraftContentState,
   convertToRaw,
-  RichUtils,
+  convertFromRaw,
 } from 'draft-js'
 import {
   BsTypeBold,
@@ -25,7 +27,9 @@ import Styles from '@/styles/rich-text-editor.style'
 import RichTextActionButton from '@/styles/styled-components/rich-text-action-button.component'
 
 const RichTextEditor = ({ ...props }) => {
-  const [editorState, setEditorState] = useState(EditorState.createEmpty(CustomDecorator))
+  const [editorState, setEditorState] = useState(
+    EditorState.createWithContent(convertFromRaw(props.initialContent as RawDraftContentState), CustomDecorator)
+  )
 
   /**
    * 変更反映用のハンドラー

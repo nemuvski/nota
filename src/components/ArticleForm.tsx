@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useMemo, useState } from 'react'
 import { useRouter } from 'next/router'
 import { Controller, useForm } from 'react-hook-form'
 import { RawDraftContentState } from 'draft-js'
@@ -10,15 +10,21 @@ import FormField from '@/styles/styled-components/form-field.component'
 import Button from '@/styles/styled-components/button.component'
 import FormActions from '@/styles/styled-components/form-actions.component'
 import InputText from '@/styles/styled-components/input-text.component'
+import { Article } from '@/models/Article'
+
+type Props = {
+  article?: Article
+}
 
 type FormFields = {
   title: string
   body: RawDraftContentState
 }
 
-const ArticleForm: React.FC = () => {
+const ArticleForm: React.FC<Props> = ({ article }) => {
   const router = useRouter()
   const [messageContent, setMessageContent] = useState<MessageContent | null>(null)
+  const initialBodyContent = useMemo(() => (article ? article.body : INITIAL_BODY_CONTENT), [article])
 
   const {
     control,
@@ -30,7 +36,7 @@ const ArticleForm: React.FC = () => {
     reValidateMode: 'onChange',
     defaultValues: {
       title: '',
-      body: INITIAL_BODY_CONTENT,
+      body: initialBodyContent,
     },
   })
 
@@ -40,8 +46,12 @@ const ArticleForm: React.FC = () => {
    * @param formFields
    */
   const submit = async (formFields: FormFields) => {
-    console.log(formFields)
-    // TODO: 登録処理
+    // コンポーネントプロパティのarticleがある場合は編集モード
+    if (article) {
+      console.log('EDIT', formFields)
+    } else {
+      console.log('CREATE', formFields)
+    }
     setMessageContent({ level: 'warning', content: 'now under construction' })
   }
 
@@ -65,7 +75,9 @@ const ArticleForm: React.FC = () => {
           <Controller
             control={control}
             name='body'
-            render={({ field: { onChange } }) => <RichTextEditor onChange={onChange} />}
+            render={({ field: { onChange } }) => (
+              <RichTextEditor initialContent={initialBodyContent} onChange={onChange} />
+            )}
           />
         </FormField>
 
