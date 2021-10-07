@@ -21,15 +21,22 @@ service firebase.storage {
       );
     }
 
-    match /v0 {
-      /**
-       * accountディレクトリ
-       */
-      match /account/{uid}/{filename} {
-        allow read: if true;
-        allow write: if isOwnResource(uid) && isValidFileFormat();
-        allow delete: if isOwnResource(uid);
-      }
+    /**
+     * accountディレクトリ
+     */
+    match /v0/account/{uid}/{filename} {
+      allow read: if true;
+      allow write: if isOwnResource(uid) && isValidFileFormat();
+      allow delete: if isOwnResource(uid);
+    }
+
+    /**
+     * article/thumbnailディレクトリ
+     */
+    match /v0/article/thumbnail/{uid}/{filename} {
+      allow read: if true;
+      allow write: if isOwnResource(uid) && isValidFileFormat();
+      allow delete: if isOwnResource(uid);
     }
   }
 }
