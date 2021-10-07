@@ -3,16 +3,18 @@ rules_version = '2';
 service cloud.firestore {
   match /databases/{database}/documents {
     /**
-     * 自身のファイルの場合のみ許可
+     * Accountコレクション
      */
-    function isOwnResource(uid) {
-      return (request.auth != null && uid == request.auth.uid);
-    }
-    /**
-     * CreateリクエストのAccountデータが正しい場合は許可
-     */
-    function isValidCreatingAccount() {
-      return (
+    match /NotaApp/v0/Account/{docId} {
+      /**
+       * 自身のAccountデータの場合のみ許可
+       */
+      function isOwnAccountResource(uid) {
+        return (request.auth != null && uid == request.auth.uid);
+      }
+
+      allow get,list: if resource.data.status == 'active';
+      allow create: if isOwnAccountResource(docId) && (
         // フィールドチェック
         request.resource.data.keys().hasAll(['uid', 'displayName', 'status', 'createdAt', 'updatedAt'])
         // uidフィールドの値チェック
@@ -26,12 +28,7 @@ service cloud.firestore {
         // updatedAtフィールドの型チェック
         && request.resource.data.updatedAt is timestamp
       );
-    }
-    /**
-     * UpdateリクエストのAccountデータが正しい場合は許可
-     */
-    function isValidUpdatingAccount() {
-      return (
+      allow update: if isOwnAccountResource(docId) && (
         // updatedAtフィールドがあるかのチェック (必須)
         request.resource.data.keys().hasAll(['updatedAt'])
         // displayNameフィールドの型と値チェック
@@ -39,19 +36,7 @@ service cloud.firestore {
         // updatedAtフィールドの型チェック
         && request.resource.data.updatedAt is timestamp
       );
-    }
-
-    match /NotaApp/v0 {
-      /**
-       * Accountコレクション
-       */
-      match /Account/{docId} {
-        allow get: if resource.data.status == 'active';
-        allow list: if resource.data.status == 'active';
-        allow create: if isOwnResource(docId) && isValidCreatingAccount();
-        allow update: if isOwnResource(docId) && isValidUpdatingAccount();
-        allow delete: if false;
-      }
+      allow delete: if false;
     }
   }
 }
