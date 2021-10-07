@@ -44,8 +44,10 @@ const ArticleForm: React.FC<Props> = ({ article }) => {
    * Saveボタン押下イベント
    *
    * @param formFields
+   * @param isDraft
    */
-  const submit = async (formFields: FormFields) => {
+  const submit = async (formFields: FormFields, isDraft: boolean) => {
+    console.log(isDraft ? 'DRAFT' : 'PUBLISH')
     // コンポーネントプロパティのarticleがある場合は編集モード
     if (article) {
       console.log('EDIT', formFields)
@@ -59,7 +61,7 @@ const ArticleForm: React.FC<Props> = ({ article }) => {
     <>
       {messageContent && <Message level={messageContent.level}>{messageContent.content}</Message>}
 
-      <form onSubmit={handleSubmit(submit)}>
+      <form onSubmit={(e) => e.preventDefault()}>
         <FormField>
           <label>Title</label>
           <InputText
@@ -85,8 +87,21 @@ const ArticleForm: React.FC<Props> = ({ article }) => {
           <Button type='button' color='gray' disabled={isSubmitting} onClick={() => router.push('/dashboard')}>
             Cancel
           </Button>
-          <Button type='submit' color='primary' disabled={!isValid || isSubmitting}>
-            Save
+          <Button
+            type='button'
+            color='gray'
+            disabled={!isValid || isSubmitting}
+            onClick={handleSubmit((formFields) => submit(formFields, true))}
+          >
+            Save as Draft
+          </Button>
+          <Button
+            type='button'
+            color='primary'
+            disabled={!isValid || isSubmitting}
+            onClick={handleSubmit((formFields) => submit(formFields, false))}
+          >
+            Save & Publish
           </Button>
         </FormActions>
       </form>
