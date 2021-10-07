@@ -29,10 +29,47 @@ service cloud.firestore {
         && request.resource.data.updatedAt is timestamp
       );
       allow update: if isOwnAccountResource(docId) && (
-        // updatedAtフィールドがあるかのチェック (必須)
-        request.resource.data.keys().hasAll(['updatedAt'])
         // displayNameフィールドの型と値チェック
-        && request.resource.data.displayName is string && request.resource.data.displayName.size() <= 20
+        request.resource.data.displayName is string && request.resource.data.displayName.size() <= 20
+        // updatedAtフィールドの型チェック
+        && request.resource.data.updatedAt is timestamp
+      );
+      allow delete: if false;
+    }
+
+    /**
+     * Articleコレクション
+     */
+    match /NotaApp/v0/Article/{docId} {
+      /**
+       * 自身のArticleデータの場合のみ許可
+       */
+      function isOwnArticleResource() {
+        return request.resource.data.ownerUid == request.auth.uid;
+      }
+
+      allow get,list: if resource.data.status == 'published' || (resource.data.status == 'draft' && resource.data.ownerUid == request.auth.uid);
+      allow create: if isOwnArticleResource() && (
+        // フィールドチェック
+        request.resource.data.keys().hasAll(['ownerUid', 'title', 'body', 'status', 'createdAt', 'updatedAt'])
+        // titleフィールドの型と値チェック
+        && request.resource.data.title is string && request.resource.data.title.size() <= 120
+        // bodyフィールドの型チェック
+        && request.resource.data.body is string
+        // statusフィールドの値チェック
+        && request.resource.data.status.matches('published|draft')
+        // createdAtフィールドの型チェック
+        && request.resource.data.createdAt is timestamp
+        // updatedAtフィールドの型チェック
+        && request.resource.data.updatedAt is timestamp
+      );
+      allow update: if isOwnArticleResource() && (
+        // titleフィールドの型と値チェック
+        request.resource.data.title is string && request.resource.data.title.size() <= 120
+        // bodyフィールドの型チェック
+        && request.resource.data.body is string
+        // statusフィールドの値チェック
+        && request.resource.data.status.matches('published|draft|removed')
         // updatedAtフィールドの型チェック
         && request.resource.data.updatedAt is timestamp
       );

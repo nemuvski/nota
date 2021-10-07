@@ -9,6 +9,7 @@
     "build:analyze": "ANALYZE=1 next build",
     "start": "next start",
     "test:firestore:account": "firebase emulators:exec --only firestore \"jest src/test/firestore-account.test.ts --silent\"",
+    "test:firestore:article": "firebase emulators:exec --only firestore \"jest src/test/firestore-article.test.ts --silent\"",
     "lint": "next lint --dir src",
     "format": "prettier --check --ignore-path .gitignore './**/*.{js,jsx,ts,tsx}'",
     "format:fix": "prettier --write --ignore-path .gitignore './**/*.{js,jsx,ts,tsx}'",
