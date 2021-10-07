@@ -1,9 +1,8 @@
 import {
   FirestoreError as FirebaseFirestoreError,
+  documentId,
   collection,
-  doc,
   addDoc,
-  getDoc,
   getDocs,
   query,
   where,
@@ -25,10 +24,17 @@ const collectionRef = collection(firestore, PREFIX_COLLECTION_PATH, 'Article')
  */
 export const getArticle = async (id: FirestoreDocumentId) => {
   try {
-    const snapshot = await getDoc(doc(collectionRef, id))
-    const docData = snapshot.data()
-    if (!docData) return undefined
-    return buildArticle(snapshot.id, docData)
+    const snapshot = await getDocs(
+      query(
+        collectionRef,
+        where(documentId(), '==', id),
+        where('status', 'in', [ArticleStatus.Published, ArticleStatus.Draft])
+      )
+    )
+    if (!snapshot.docs.length) return undefined
+    // 必然的に1つになる
+    const fetchedDoc = snapshot.docs[0]
+    return buildArticle(fetchedDoc.id, fetchedDoc.data())
   } catch (error) {
     throw new FirestoreError(error as FirebaseFirestoreError)
   }

@@ -1,9 +1,12 @@
 import {
   FirestoreError as FirebaseFirestoreError,
+  documentId,
   collection,
   doc,
   setDoc,
-  getDoc,
+  getDocs,
+  query,
+  where,
   serverTimestamp,
 } from 'firebase/firestore'
 import { firestore } from '@/libs/firebase'
@@ -20,10 +23,13 @@ const collectionRef = collection(firestore, PREFIX_COLLECTION_PATH, 'Account')
  */
 export const getAccount = async (uid: AuthUid) => {
   try {
-    const snapshot = await getDoc(doc(collectionRef, uid))
-    const docData = snapshot.data()
-    if (!docData) return undefined
-    return buildAccount(snapshot.id, docData)
+    const snapshot = await getDocs(
+      query(collectionRef, where(documentId(), '==', uid), where('status', '==', AccountStatus.Active))
+    )
+    if (!snapshot.docs.length) return undefined
+    // 必然的に1つになる
+    const fetchedDoc = snapshot.docs[0]
+    return buildAccount(fetchedDoc.id, fetchedDoc.data())
   } catch (error) {
     throw new FirestoreError(error as FirebaseFirestoreError)
   }
