@@ -9,8 +9,6 @@ import {
   RichUtils,
 } from 'draft-js'
 import {
-  BsArrow90DegLeft,
-  BsArrow90DegRight,
   BsTypeBold,
   BsTypeItalic,
   BsTypeUnderline,
@@ -21,7 +19,7 @@ import {
   BsListUl,
   BsListOl,
 } from 'react-icons/bs'
-import { IoLinkOutline, IoUnlinkOutline } from 'react-icons/io5'
+import { IoArrowUndoOutline, IoArrowRedoOutline, IoLinkOutline, IoUnlinkOutline } from 'react-icons/io5'
 import { CustomDecorator } from '@/libs/draft-js'
 import Styles from '@/styles/rich-text-editor.style'
 import RichTextActionButton from '@/styles/styled-components/rich-text-action-button.component'
@@ -105,7 +103,7 @@ const RichTextEditor = ({ ...props }) => {
             disabled={!editorState.getUndoStack().size}
             onClick={() => handleEditorStateChange(EditorState.undo(editorState))}
           >
-            <BsArrow90DegLeft />
+            <IoArrowUndoOutline />
           </RichTextActionButton>
         </li>
         <li>
@@ -113,7 +111,7 @@ const RichTextEditor = ({ ...props }) => {
             disabled={!editorState.getRedoStack().size}
             onClick={() => handleEditorStateChange(EditorState.redo(editorState))}
           >
-            <BsArrow90DegRight />
+            <IoArrowRedoOutline />
           </RichTextActionButton>
         </li>
         <li>
