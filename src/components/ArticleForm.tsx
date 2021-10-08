@@ -63,6 +63,10 @@ const ArticleForm: React.FC<Props> = ({ article }) => {
 
       <form onSubmit={(e) => e.preventDefault()}>
         <FormField>
+          <label>Thumbnail Image</label>
+        </FormField>
+
+        <FormField>
           <label>Title</label>
           <InputText
             isError={Boolean(errors.title)}
