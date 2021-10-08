@@ -35,7 +35,7 @@ const ArticleForm: React.FC<Props> = ({ article }) => {
     mode: 'onChange',
     reValidateMode: 'onChange',
     defaultValues: {
-      title: '',
+      title: article ? article.title : '',
       body: initialBodyContent,
     },
   })
