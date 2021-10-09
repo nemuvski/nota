@@ -3,14 +3,15 @@ import { useRouter } from 'next/router'
 import { Controller, useForm } from 'react-hook-form'
 import { RawDraftContentState } from 'draft-js'
 import { INITIAL_BODY_CONTENT, MAX_LENGTH_TITLE } from '@/constants/article'
+import { Article } from '@/models/Article'
+import { MessageContent } from '@/models/Message'
 import Message from '@/components/Message'
 import RichTextEditor from '@/components/RichTextEditor'
-import { MessageContent } from '@/models/Message'
+import SetThumbnail from '@/components/SetThumbnail'
 import FormField from '@/styles/styled-components/form-field.component'
 import Button from '@/styles/styled-components/button.component'
 import FormActions from '@/styles/styled-components/form-actions.component'
 import InputText from '@/styles/styled-components/input-text.component'
-import { Article } from '@/models/Article'
 
 type Props = {
   article?: Article
@@ -24,6 +25,8 @@ type FormFields = {
 const ArticleForm: React.FC<Props> = ({ article }) => {
   const router = useRouter()
   const [messageContent, setMessageContent] = useState<MessageContent | null>(null)
+  const [uploadingImage, setUploadingImage] = useState<Blob | undefined>(undefined)
+
   const initialBodyContent = useMemo(() => (article ? article.body : INITIAL_BODY_CONTENT), [article])
 
   const {
@@ -64,6 +67,11 @@ const ArticleForm: React.FC<Props> = ({ article }) => {
       <form onSubmit={(e) => e.preventDefault()}>
         <FormField>
           <label>Thumbnail Image</label>
+          <SetThumbnail
+            thumbnailUrl={article?.thumbnailUrl}
+            uploadingImageData={uploadingImage}
+            setUploadingImageData={(data) => setUploadingImage(data)}
+          />
         </FormField>
 
         <FormField>

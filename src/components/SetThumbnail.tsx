@@ -1,22 +1,21 @@
 import React, { useCallback, useEffect, useMemo, useState } from 'react'
 import { Area } from 'react-easy-crop/types'
-import { IoCameraReverse } from 'react-icons/io5'
 import { getCroppedImage } from '@/utils/file'
+import { THUMBNAIL_ASPECT_RATIO } from '@/constants/article'
 import Modal from '@/components/Modal'
 import FileDropzone from '@/components/FileDropzone'
 import ImageCropper from '@/components/ImageCropper'
-import Styles from '@/styles/set-avatar.style'
-import Avatar from '@/styles/styled-components/avatar.component'
+import Styles from '@/styles/set-thumbnail.style'
 import FormActions from '@/styles/styled-components/form-actions.component'
 import Button from '@/styles/styled-components/button.component'
 
 type Props = {
-  avatarUrl?: string
+  thumbnailUrl?: string
   uploadingImageData?: Blob
   setUploadingImageData: (data?: Blob) => void
 }
 
-const SetAvatar: React.FC<Props> = ({ avatarUrl, uploadingImageData, setUploadingImageData }) => {
+const SetThumbnail: React.FC<Props> = ({ thumbnailUrl, uploadingImageData, setUploadingImageData }) => {
   const [isOpenModal, setIsOpenModal] = useState(false)
   // 選択中の画像ファイル
   const [selectedFile, setSelectedFile] = useState<File | undefined>()
@@ -42,23 +41,6 @@ const SetAvatar: React.FC<Props> = ({ avatarUrl, uploadingImageData, setUploadin
     }
   }, [selectedFile, croppedAreaPixels, setUploadingImageData])
 
-  const avatarPreviewComponent = useMemo(
-    () => (
-      <div css={Styles.root}>
-        <Avatar
-          css={Styles.image}
-          // 選択中のファイル優先して表示
-          src={uploadingImageData ? URL.createObjectURL(uploadingImageData) : avatarUrl}
-          onClick={() => setIsOpenModal(true)}
-        />
-        <div css={Styles.editIconWrapper}>
-          <IoCameraReverse css={Styles.editIcon} onClick={() => setIsOpenModal(true)} />
-        </div>
-      </div>
-    ),
-    [uploadingImageData, avatarUrl]
-  )
-
   const modalComponent = useMemo(
     () => (
       <Modal closeAction={() => setIsOpenModal(false)}>
@@ -70,7 +52,8 @@ const SetAvatar: React.FC<Props> = ({ avatarUrl, uploadingImageData, setUploadin
             <ImageCropper
               imageSource={selectedFile}
               setCroppedAreaPixels={(area) => setCroppedAreaPixels(area)}
-              isCropRoundShape={true}
+              aspect={THUMBNAIL_ASPECT_RATIO}
+              isCropRoundShape={false}
             />
             <FormActions>
               <Button
@@ -103,11 +86,33 @@ const SetAvatar: React.FC<Props> = ({ avatarUrl, uploadingImageData, setUploadin
 
   return (
     <>
-      {avatarPreviewComponent}
+      <div css={Styles.root}>
+        {(thumbnailUrl || uploadingImageData) && (
+          <div css={Styles.imageWrapper}>
+            <img src={thumbnailUrl ?? URL.createObjectURL(uploadingImageData)} alt='Thumbnail Image' />
+          </div>
+        )}
+        <div css={[Styles.actions, (thumbnailUrl || uploadingImageData) && Styles.actionsVariant]}>
+          {thumbnailUrl && uploadingImageData && (
+            <Button type='button' color='secondary'>
+              Remove
+            </Button>
+          )}
+          {uploadingImageData && (
+            <Button type='button' color='gray' onClick={() => setUploadingImageData(undefined)}>
+              Clear
+            </Button>
+          )}
+          <Button type='button' color='primary' onClick={() => setIsOpenModal(true)}>
+            {uploadingImageData ? 'Edit' : 'Select a image file'}
+          </Button>
+        </div>
+      </div>
+
       {/* ファイルの選択/トリミングをするモーダル */}
       {isOpenModal && modalComponent}
     </>
   )
 }
 
-export default SetAvatar
+export default SetThumbnail
