@@ -13,7 +13,7 @@ import { getCroppedImage } from '@/utils/file'
 type Props = {
   avatarUrl?: string
   uploadingImageData?: Blob
-  setUploadingImageData: (data: Blob | undefined) => void
+  setUploadingImageData: (data?: Blob) => void
 }
 
 const SetAvatar: React.FC<Props> = ({ avatarUrl, uploadingImageData, setUploadingImageData }) => {

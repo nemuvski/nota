@@ -84,7 +84,7 @@ const ChangePasswordPage: NextPage = () => {
       <Box>
         {messageContent && <Message level={messageContent.level}>{messageContent.content}</Message>}
 
-        <form onSubmit={handleSubmit(submit)}>
+        <form onSubmit={(e) => e.preventDefault()}>
           <FormField>
             <SetAvatar
               avatarUrl={myAccount?.avatarUrl}
@@ -108,7 +108,7 @@ const ChangePasswordPage: NextPage = () => {
             <Button type='button' color='gray' disabled={isSubmitting} onClick={() => router.push('./')}>
               Cancel
             </Button>
-            <Button type='submit' color='primary' disabled={!isValid || isSubmitting}>
+            <Button type='button' color='primary' disabled={!isValid || isSubmitting} onClick={handleSubmit(submit)}>
               Save
             </Button>
           </FormActions>
