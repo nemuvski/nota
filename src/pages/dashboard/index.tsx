@@ -1,7 +1,7 @@
 import type { NextPage } from 'next'
+import { useRouter } from 'next/router'
 import Layout from '@/components/Layout'
 import Button from '@/styles/styled-components/button.component'
-import { useRouter } from 'next/router'
 
 const DashboardIndexPage: NextPage = () => {
   const router = useRouter()

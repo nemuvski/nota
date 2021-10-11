@@ -1,7 +1,7 @@
 import type { NextPage } from 'next'
 import Layout from '@/components/Layout'
-import PageTitle from '@/styles/styled-components/page-title.component'
 import ArticleForm from '@/components/ArticleForm'
+import PageTitle from '@/styles/styled-components/page-title.component'
 
 const CreateArticlePage: NextPage = () => {
   return (
