@@ -20,16 +20,37 @@ import { jsonStringify } from '@/utils/json'
 const collectionRef = collection(firestore, PREFIX_COLLECTION_PATH, 'Article')
 
 /**
- * Articleドキュメントを取得
+ * 公開されているArticleドキュメントを取得
  *
  * @param id
  */
-export const getArticle = async (id: FirestoreDocumentId) => {
+export const getPublishedArticle = async (id: FirestoreDocumentId) => {
+  try {
+    const snapshot = await getDocs(
+      query(collectionRef, where(documentId(), '==', id), where('status', '==', ArticleStatus.Published))
+    )
+    if (!snapshot.docs.length) return undefined
+    // 必然的に1つになる
+    const fetchedDoc = snapshot.docs[0]
+    return buildArticle(fetchedDoc.id, fetchedDoc.data())
+  } catch (error) {
+    throw new FirestoreError(error as FirebaseFirestoreError)
+  }
+}
+
+/**
+ * 所有アカウントのArticleドキュメントを取得
+ *
+ * @param id
+ * @param ownerUid
+ */
+export const getMyArticle = async (id: FirestoreDocumentId, ownerUid: AuthUid) => {
   try {
     const snapshot = await getDocs(
       query(
         collectionRef,
         where(documentId(), '==', id),
+        where('ownerUid', '==', ownerUid),
         where('status', 'in', [ArticleStatus.Published, ArticleStatus.Draft])
       )
     )
@@ -89,7 +110,7 @@ export const addArticle = async (
       createdAt: currentTimestamp,
       updatedAt: currentTimestamp,
     })
-    return await getArticle(newDoc.id)
+    return await getMyArticle(newDoc.id, ownerUid)
   } catch (error) {
     throw new FirestoreError(error as FirebaseFirestoreError)
   }
@@ -123,7 +144,7 @@ export const updateArticle = async (
       status,
       updatedAt: currentTimestamp,
     })
-    return await getArticle(id)
+    return await getMyArticle(id, ownerUid)
   } catch (error) {
     throw new FirestoreError(error as FirebaseFirestoreError)
   }

@@ -1,6 +1,6 @@
 import { createAsyncThunk } from '@reduxjs/toolkit'
 import { RawDraftContentState } from 'draft-js'
-import { addArticle, updateArticle } from '@/infrastructure/article'
+import { addArticle, getMyArticle, updateArticle } from '@/infrastructure/article'
 import { ArticleStatusType } from '@/models/Article'
 
 interface AddPayloadParams {
@@ -14,6 +14,13 @@ interface AddPayloadParams {
 interface UpdatePayloadParams extends AddPayloadParams {
   id: FirestoreDocumentId
 }
+
+export const getMyArticleAction = createAsyncThunk(
+  'article/getMyArticle',
+  async ({ id, uid }: { id: FirestoreDocumentId; uid: AuthUid }) => {
+    return await getMyArticle(id, uid)
+  }
+)
 
 export const addArticleAction = createAsyncThunk(
   'article/addArticle',
