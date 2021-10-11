@@ -136,14 +136,18 @@ export const updateArticle = async (
 ) => {
   const currentTimestamp = serverTimestamp()
   try {
-    await setDoc(doc(collectionRef, id), {
-      ownerUid,
-      title,
-      body: jsonStringify<RawDraftContentState>(body),
-      thumbnailUrl,
-      status,
-      updatedAt: currentTimestamp,
-    })
+    await setDoc(
+      doc(collectionRef, id),
+      {
+        ownerUid,
+        title,
+        body: jsonStringify<RawDraftContentState>(body),
+        thumbnailUrl,
+        status,
+        updatedAt: currentTimestamp,
+      },
+      { merge: true }
+    )
     return await getMyArticle(id, ownerUid)
   } catch (error) {
     throw new FirestoreError(error as FirebaseFirestoreError)
