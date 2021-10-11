@@ -8,7 +8,7 @@ const DashboardIndexPage: NextPage = () => {
 
   return (
     <Layout title='Dashboard'>
-      <Button type='button' color='primary' onClick={() => router.push('/own/article/create')}>
+      <Button type='button' color='primary' onClick={() => router.push('/own/articles/create')}>
         Create Article
       </Button>
     </Layout>
