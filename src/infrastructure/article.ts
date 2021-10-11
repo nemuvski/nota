@@ -2,7 +2,9 @@ import {
   FirestoreError as FirebaseFirestoreError,
   documentId,
   collection,
+  doc,
   addDoc,
+  setDoc,
   getDocs,
   query,
   where,
@@ -88,6 +90,40 @@ export const addArticle = async (
       updatedAt: currentTimestamp,
     })
     return await getArticle(newDoc.id)
+  } catch (error) {
+    throw new FirestoreError(error as FirebaseFirestoreError)
+  }
+}
+
+/**
+ * Articleドキュメントを更新し、更新したドキュメントを取得
+ *
+ * @param id
+ * @param ownerUid
+ * @param title
+ * @param body
+ * @param status
+ * @param thumbnailUrl
+ */
+export const updateArticle = async (
+  id: FirestoreDocumentId,
+  ownerUid: AuthUid,
+  title: string,
+  body: RawDraftContentState,
+  status: ArticleStatusType,
+  thumbnailUrl?: string
+) => {
+  const currentTimestamp = serverTimestamp()
+  try {
+    await setDoc(doc(collectionRef, id), {
+      ownerUid,
+      title,
+      body: jsonStringify<RawDraftContentState>(body),
+      thumbnailUrl,
+      status,
+      updatedAt: currentTimestamp,
+    })
+    return await getArticle(id)
   } catch (error) {
     throw new FirestoreError(error as FirebaseFirestoreError)
   }
