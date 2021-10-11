@@ -2,9 +2,15 @@ import React, { useMemo, useState } from 'react'
 import { useRouter } from 'next/router'
 import { Controller, useForm } from 'react-hook-form'
 import { RawDraftContentState } from 'draft-js'
+import { useDispatch, useSelector } from 'react-redux'
 import { INITIAL_BODY_CONTENT, MAX_LENGTH_TITLE } from '@/constants/article'
-import { Article } from '@/models/Article'
+import { Article, ArticleStatus } from '@/models/Article'
 import { MessageContent } from '@/models/Message'
+import { useToast } from '@/hooks/toast'
+import { selectMyAccount } from '@/stores/account/selector'
+import { AppDispatch } from '@/stores/store'
+import { uploadAvatarImage } from '@/infrastructure/storage/account'
+import { addArticleAction, updateArticleAction } from '@/stores/article/action'
 import Message from '@/components/Message'
 import RichTextEditor from '@/components/RichTextEditor'
 import SetThumbnail from '@/components/SetThumbnail'
@@ -23,7 +29,10 @@ type FormFields = {
 }
 
 const ArticleForm: React.FC<Props> = ({ article }) => {
+  const dispatch = useDispatch<AppDispatch>()
   const router = useRouter()
+  const { addToast } = useToast()
+  const myAccount = useSelector(selectMyAccount)
   const [messageContent, setMessageContent] = useState<MessageContent | null>(null)
   const [uploadingImage, setUploadingImage] = useState<Blob | undefined>(undefined)
 
@@ -50,14 +59,50 @@ const ArticleForm: React.FC<Props> = ({ article }) => {
    * @param isDraft
    */
   const submit = async (formFields: FormFields, isDraft: boolean) => {
-    console.log(isDraft ? 'DRAFT' : 'PUBLISH')
-    // コンポーネントプロパティのarticleがある場合は編集モード
-    if (article) {
-      console.log('EDIT', formFields)
-    } else {
-      console.log('CREATE', formFields)
+    if (!myAccount) return
+    const { title, body } = formFields
+    setMessageContent(null)
+
+    try {
+      let uploadedAvatarImageUrl: string | undefined
+      // ファイル選択がされている場合のみアップロード
+      if (uploadingImage) {
+        uploadedAvatarImageUrl = await uploadAvatarImage(myAccount.uid, uploadingImage)
+        addToast('success', 'Avatar image uploaded')
+        // アップロード後はローカルデータはクリア
+        setUploadingImage(undefined)
+      }
+
+      // コンポーネントプロパティのarticleがある場合は編集モード
+      if (article) {
+        await dispatch(
+          updateArticleAction({
+            id: article.id,
+            ownerUid: myAccount.uid,
+            title,
+            body,
+            thumbnailUrl: uploadedAvatarImageUrl,
+            status: isDraft ? ArticleStatus.Draft : ArticleStatus.Published,
+          })
+        ).unwrap()
+        addToast('success', 'Article changed')
+      } else {
+        await dispatch(
+          addArticleAction({
+            ownerUid: myAccount.uid,
+            title,
+            body,
+            thumbnailUrl: uploadedAvatarImageUrl,
+            status: isDraft ? ArticleStatus.Draft : ArticleStatus.Published,
+          })
+        ).unwrap()
+        addToast('success', 'Article created')
+      }
+
+      // TODO: ここで詳細ページへ遷移する
+    } catch (error: any) {
+      setMessageContent({ level: 'error', content: error.message })
     }
-    setMessageContent({ level: 'warning', content: 'now under construction' })
   }
 
   return (
