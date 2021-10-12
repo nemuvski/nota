@@ -7,6 +7,7 @@ import Styles from '@/styles/settings-index-page.style'
 import PageTitle from '@/styles/styled-components/page-title.component'
 import Box from '@/styles/styled-components/box.component'
 import Button from '@/styles/styled-components/button.component'
+import ButtonIcon from '@/styles/styled-components/button-icon.component'
 
 const SettingsIndexPage: NextPage = () => {
   const router = useRouter()
@@ -21,25 +22,25 @@ const SettingsIndexPage: NextPage = () => {
         <ul css={Styles.menu}>
           <li>
             <Button color='gray' type='button' onClick={() => router.push('/settings/change-profile')}>
-              <div css={Styles.icon}>
+              <ButtonIcon>
                 <IoPersonCircleOutline />
-              </div>
+              </ButtonIcon>
               <span>Change Profile</span>
             </Button>
           </li>
           <li>
             <Button color='gray' type='button' onClick={() => router.push('/settings/change-email')}>
-              <div css={Styles.icon}>
+              <ButtonIcon>
                 <IoMailOutline />
-              </div>
+              </ButtonIcon>
               <span>Change Email</span>
             </Button>
           </li>
           <li>
             <Button color='gray' type='button' onClick={() => router.push('/settings/change-password')}>
-              <div css={Styles.icon}>
+              <ButtonIcon>
                 <IoKeyOutline />
-              </div>
+              </ButtonIcon>
               <span>Change Password</span>
             </Button>
           </li>

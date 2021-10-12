@@ -17,14 +17,8 @@ const menu = css`
   }
 `
 
-const icon = css`
-  width: 1.25rem;
-  margin-right: 0.5rem;
-`
-
 const styles = {
   menu,
-  icon,
 }
 
 export default styles

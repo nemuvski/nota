@@ -44,11 +44,6 @@ const HeaderNavigation = () => {
               </Button>
             </li>
             <li>
-              <Button type='button' onClick={() => router.push('/settings')}>
-                Settings
-              </Button>
-            </li>
-            <li>
               <Button type='button' onClick={() => router.push('/logout')}>
                 Log out
               </Button>
