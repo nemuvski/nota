@@ -1,5 +1,6 @@
 import React, { useCallback, useEffect, useMemo, useState } from 'react'
 import { Area } from 'react-easy-crop/types'
+import { IoImageOutline } from 'react-icons/io5'
 import { getCroppedImage } from '@/utils/file'
 import { THUMBNAIL_ASPECT_RATIO } from '@/constants/article'
 import Modal from '@/components/Modal'
@@ -8,6 +9,7 @@ import ImageCropper from '@/components/ImageCropper'
 import Styles from '@/styles/set-thumbnail.style'
 import FormActions from '@/styles/styled-components/form-actions.component'
 import Button from '@/styles/styled-components/button.component'
+import ButtonIcon from '@/styles/styled-components/button-icon.component'
 
 type Props = {
   thumbnailUrl?: string
@@ -104,6 +106,9 @@ const SetThumbnail: React.FC<Props> = ({ thumbnailUrl, uploadingImageData, setUp
             </Button>
           )}
           <Button type='button' color='primary' onClick={() => setIsOpenModal(true)}>
+            <ButtonIcon>
+              <IoImageOutline />
+            </ButtonIcon>
             {uploadingImageData ? 'Edit' : 'Select a image file'}
           </Button>
         </div>
