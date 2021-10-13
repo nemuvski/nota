@@ -4,12 +4,7 @@ import { RootState } from '@/stores/store'
 import { selectAuth } from '@/stores/auth/selector'
 
 const accountState = (state: RootState) => state.account
-const { selectAll, selectById } = accountAdapter.getSelectors()
-
-/**
- * ストアから全件のAccountを取得
- */
-export const selectAllAccounts = createSelector(accountState, selectAll)
+const { selectById } = accountAdapter.getSelectors()
 
 /**
  * ストアから指定したAccountを取得
