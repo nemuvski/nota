@@ -13,7 +13,9 @@
     "lint": "next lint --dir src",
     "format": "prettier --check --ignore-path .gitignore './**/*.{js,jsx,ts,tsx}'",
     "format:fix": "prettier --write --ignore-path .gitignore './**/*.{js,jsx,ts,tsx}'",
+    "export:firestore:indexes": "firebase firestore:indexes > firestore.indexes.json",
     "deploy:firestore:rules": "firebase deploy --only firestore:rules",
+    "deploy:firestore:indexes": "firebase deploy --only firestore:indexes",
     "deploy:storage:rules": "firebase deploy --only storage:rules"
   },
   "dependencies": {

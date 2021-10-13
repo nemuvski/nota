@@ -23,8 +23,9 @@ yarn install
 # Firebase CLI（firebase-tools）を事前に導入すること
 firebase init
 
-# セキュリティルールをデプロイ
+# Firestore, Cloud Storageの設定等をデプロイ
 yarn deploy:firestore:rules
+yarn deploy:firestore:indexes
 yarn deploy:storage:rules
 ```
 
