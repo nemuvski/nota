@@ -17,3 +17,8 @@ export const INITIAL_BODY_CONTENT: RawDraftContentState = {
   blocks: [],
   entityMap: {},
 }
+
+/**
+ * ダッシュボードページで表示する記事数
+ */
+export const DASHBOARD_PAGE_NUM_ARTICLES = 6

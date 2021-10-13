@@ -6,6 +6,8 @@ import {
   addDoc,
   setDoc,
   getDocs,
+  limit,
+  orderBy,
   query,
   where,
   serverTimestamp,
@@ -67,17 +69,22 @@ export const getMyArticle = async (id: FirestoreDocumentId, ownerUid: AuthUid) =
  * 所有アカウントのArticleドキュメント群を取得
  *
  * @param ownerUid
+ * @param status
+ * @param limitNumber
  */
-export const getArticlesByOwnerUid = async (ownerUid: AuthUid) => {
+export const getMyArticles = async (ownerUid: AuthUid, status?: ArticleStatusType, limitNumber?: number) => {
   try {
-    const snapshot = await getDocs(
-      query(
-        collectionRef,
-        where('ownerUid', '==', ownerUid),
-        where('status', 'in', [ArticleStatus.Published, ArticleStatus.Draft])
-      )
-    )
-    return snapshot.docs.map((d) => buildArticle(d.id, d.data()))
+    let q = query(collectionRef, where('ownerUid', '==', ownerUid), orderBy('updatedAt', 'desc'))
+    // ステータスが指定されている場合は絞る
+    if (status) {
+      q = query(q, where('status', '==', status))
+    }
+    // 上限数が指定されている場合は設定
+    if (limitNumber && limitNumber > 0) {
+      q = query(q, limit(limitNumber))
+    }
+    const snapshot = await getDocs(q)
+    return snapshot.docs.map((fetchedDoc) => buildArticle(fetchedDoc.id, fetchedDoc.data()))
   } catch (error) {
     throw new FirestoreError(error as FirebaseFirestoreError)
   }

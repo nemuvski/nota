@@ -1,11 +1,11 @@
 import { RootState } from '@/stores/store'
 import { articleAdapter } from '@/stores/article/slice'
 import { createSelector } from '@reduxjs/toolkit'
-import { ArticleStatus } from '@/models/Article'
+import { ArticleStatus, ArticleStatusType } from '@/models/Article'
 import { selectAuth } from '@/stores/auth/selector'
 
 const articleState = (state: RootState) => state.article
-const { selectById } = articleAdapter.getSelectors()
+const { selectAll, selectById } = articleAdapter.getSelectors()
 
 /**
  * ストアから自身の所有するArticleを取得
@@ -25,4 +25,32 @@ export const selectMyArticle = (docId: FirestoreDocumentId) =>
       return targetArticle
     }
     return undefined
+  })
+
+/**
+ * ストアから自身の所有するArticle群を取得する
+ *
+ * @param status
+ * @param size
+ */
+export const selectMyArticles = (status?: ArticleStatusType, size?: number) =>
+  createSelector(articleState, selectAuth, (articleState, authUser) => {
+    if (!authUser || !authUser.uid) return []
+    const targetArticles = selectAll(articleState).filter((article) => {
+      if (article.ownerUid !== authUser.uid) {
+        return false
+      }
+      // ステータスが指定されている場合は評価する
+      if (status) {
+        return article.status === status
+      }
+      return true
+    })
+
+    // サイズが指定されている場合は個数を制限する
+    if (size && size > 0) {
+      return targetArticles.slice(0, size)
+    }
+
+    return targetArticles
   })
