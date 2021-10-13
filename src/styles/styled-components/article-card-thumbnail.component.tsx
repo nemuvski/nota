@@ -7,6 +7,7 @@ const ArticleCardThumbnail = styled.img(css`
   width: 100%;
   object-fit: cover;
   aspect-ratio: ${THUMBNAIL_ASPECT_RATIO};
+  border-radius: 0.3rem;
   background-color: var(--color-gray-main);
 `)
 
