@@ -4,7 +4,7 @@ import { addAccountAction, getAccountAction, updateAccountAction } from '@/store
 
 export const accountAdapter = createEntityAdapter<Account>({
   selectId: (account) => account.id,
-  sortComparer: (a, b) => a.createdAt.diff(b.createdAt),
+  sortComparer: (a, b) => b.updatedAt.diff(a.updatedAt),
 })
 
 export const accountSlice = createSlice({

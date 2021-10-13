@@ -4,7 +4,7 @@ import { addArticleAction, getMyArticleAction, updateArticleAction } from '@/sto
 
 export const articleAdapter = createEntityAdapter<Article>({
   selectId: (article) => article.id,
-  sortComparer: (a, b) => a.createdAt.diff(b.createdAt),
+  sortComparer: (a, b) => b.updatedAt.diff(a.updatedAt),
 })
 
 export const articleSlice = createSlice({
