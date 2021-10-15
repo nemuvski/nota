@@ -1,4 +1,4 @@
-import { createEntityAdapter, createSlice } from '@reduxjs/toolkit'
+import { createEntityAdapter, createSlice, PayloadAction } from '@reduxjs/toolkit'
 import { Article } from '@/models/Article'
 import { addArticleAction, getMyArticleAction, getMyArticlesAction, updateArticleAction } from '@/stores/article/action'
 
@@ -10,7 +10,11 @@ export const articleAdapter = createEntityAdapter<Article>({
 export const articleSlice = createSlice({
   name: 'article',
   initialState: articleAdapter.getInitialState(),
-  reducers: {},
+  reducers: {
+    clearArticles: (state, actions: PayloadAction<Array<FirestoreDocumentId>>) => {
+      articleAdapter.removeMany(state, actions.payload)
+    },
+  },
   extraReducers: (builder) => {
     builder.addCase(getMyArticleAction.fulfilled, (state, action) => {
       if (action.payload) {
@@ -35,3 +39,5 @@ export const articleSlice = createSlice({
     })
   },
 })
+
+export const { clearArticles } = articleSlice.actions
