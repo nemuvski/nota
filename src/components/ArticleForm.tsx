@@ -149,7 +149,16 @@ const ArticleForm: React.FC<Props> = ({ article }) => {
         </FormField>
 
         <FormActions>
-          <Button type='button' color='gray' disabled={isSubmitting} onClick={() => router.push('/dashboard')}>
+          <Button
+            type='button'
+            color='gray'
+            disabled={isSubmitting}
+            onClick={() => {
+              router.replace(
+                article ? { pathname: '/own/articles/[docId]', query: { docId: article.id } } : '/dashboard'
+              )
+            }}
+          >
             Cancel
           </Button>
           <Button
