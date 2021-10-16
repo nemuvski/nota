@@ -73,9 +73,11 @@ const ArticleForm: React.FC<Props> = ({ article }) => {
         setUploadingImage(undefined)
       }
 
+      let addedArticle: Article | undefined
+
       // コンポーネントプロパティのarticleがある場合は編集モード
       if (article) {
-        await dispatch(
+        addedArticle = await dispatch(
           updateArticleAction({
             id: article.id,
             ownerUid: myAccount.uid,
@@ -87,7 +89,7 @@ const ArticleForm: React.FC<Props> = ({ article }) => {
         ).unwrap()
         addToast('success', 'Article changed')
       } else {
-        await dispatch(
+        addedArticle = await dispatch(
           addArticleAction({
             ownerUid: myAccount.uid,
             title,
@@ -99,7 +101,13 @@ const ArticleForm: React.FC<Props> = ({ article }) => {
         addToast('success', 'Article created')
       }
 
-      // TODO: ここで詳細ページへ遷移する
+      // 作成/更新できたあとは詳細ページへ飛ぶ
+      if (addedArticle) {
+        router.replace({
+          pathname: '/own/articles/[docId]',
+          query: { docId: addedArticle.id },
+        })
+      }
     } catch (error: any) {
       setMessageContent({ level: 'error', content: error.message })
     }
