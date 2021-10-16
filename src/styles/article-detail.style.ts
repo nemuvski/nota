@@ -40,6 +40,7 @@ const dateIcon = css`
 `
 
 const body = css`
+  word-break: break-all;
   line-height: 1.8;
 
   h1 {
