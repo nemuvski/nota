@@ -4,7 +4,6 @@ const root = css`
   display: flex;
   align-items: center;
   width: 100%;
-  max-width: 375px;
   padding: 0.6rem 0.8rem;
   border-radius: 0.3rem;
   background-color: var(--color-info-light);

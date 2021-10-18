@@ -2,11 +2,11 @@ import { css } from '@emotion/react'
 
 const root = css`
   position: fixed;
-  bottom: 2rem;
+  top: 5rem;
   left: 50%;
   z-index: 10;
   width: 100%;
-  max-width: 400px;
+  max-width: calc(360px + 1.5rem);
   padding: 0 0.75rem;
   transform: translateX(-50%);
 `
