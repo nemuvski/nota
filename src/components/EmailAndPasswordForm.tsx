@@ -2,15 +2,14 @@ import React, { useState } from 'react'
 import { useRouter } from 'next/router'
 import { Controller, useForm } from 'react-hook-form'
 import { useDispatch } from 'react-redux'
-import { useToast } from '@/hooks/toast'
-import InputPassword from '@/components/InputPassword'
-import Message from '@/components/Message'
-import { logIn, sendEmailAddressVerification, signUp } from '@/infrastructure/auth'
 import { AppDispatch } from '@/stores/store'
 import { addAccountAction } from '@/stores/account/action'
 import { MessageContent } from '@/models/Message'
-import Button from '@/styles/styled-components/button.component'
 import { MIN_LENGTH_PASSWORD } from '@/constants/form'
+import { logIn, sendEmailAddressVerification, signUp } from '@/infrastructure/auth'
+import InputPassword from '@/components/InputPassword'
+import Message from '@/components/Message'
+import Button from '@/styles/styled-components/button.component'
 import InputText from '@/styles/styled-components/input-text.component'
 import Box from '@/styles/styled-components/box.component'
 import FormActions from '@/styles/styled-components/form-actions.component'
@@ -28,7 +27,6 @@ type FormFields = {
 const EmailAndPasswordForm: React.FC<Props> = ({ isSignUpMode = false }) => {
   const dispatch = useDispatch<AppDispatch>()
   const router = useRouter()
-  const { addToast } = useToast()
   const [messageContent, setMessageContent] = useState<MessageContent | null>(null)
 
   const {
@@ -65,8 +63,6 @@ const EmailAndPasswordForm: React.FC<Props> = ({ isSignUpMode = false }) => {
         // ログイン
         await logIn(email, password)
       }
-
-      addToast('info', 'Hey, thank you for coming!')
 
       // ログイン後はダッシュボードページに遷移
       router.push('/dashboard')
