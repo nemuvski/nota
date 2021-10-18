@@ -9,7 +9,7 @@ import { MessageContent } from '@/models/Message'
 import { useToast } from '@/hooks/toast'
 import { selectMyAccount } from '@/stores/account/selector'
 import { AppDispatch } from '@/stores/store'
-import { uploadAvatarImage } from '@/infrastructure/storage/account'
+import { uploadThumbnailImage } from '@/infrastructure/storage/article'
 import { addArticleAction, updateArticleAction } from '@/stores/article/action'
 import Message from '@/components/Message'
 import RichTextEditor from '@/components/RichTextEditor'
@@ -67,7 +67,7 @@ const ArticleForm: React.FC<Props> = ({ article }) => {
       let uploadedAvatarImageUrl: string | undefined
       // ファイル選択がされている場合のみアップロード
       if (uploadingImage) {
-        uploadedAvatarImageUrl = await uploadAvatarImage(myAccount.uid, uploadingImage)
+        uploadedAvatarImageUrl = await uploadThumbnailImage(myAccount.uid, uploadingImage)
         addToast('success', 'Avatar image uploaded')
         // アップロード後はローカルデータはクリア
         setUploadingImage(undefined)
