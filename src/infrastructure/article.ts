@@ -146,7 +146,6 @@ export const updateArticle = async (
     await setDoc(
       doc(collectionRef, id),
       {
-        ownerUid,
         title,
         body: jsonStringify<RawDraftContentState>(body),
         thumbnailUrl,
