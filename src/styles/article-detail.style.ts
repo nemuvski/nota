@@ -21,6 +21,7 @@ const dateContainer = css`
   display: flex;
   flex-direction: column;
   gap: 1rem;
+  margin-bottom: 1rem;
   font-size: 0.9rem;
 
   ${bp(Breakpoint.S_MIN)} {

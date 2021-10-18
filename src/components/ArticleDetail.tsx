@@ -4,6 +4,7 @@ import { Article } from '@/models/Article'
 import { dateFormat } from '@/utils/date'
 import Styles from '@/styles/article-detail.style'
 import { convertToHTMLFromRaw } from '@/libs/draft-js'
+import AccountInfo from '@/components/AccountInfo'
 
 type Props = {
   article: Article
@@ -20,6 +21,7 @@ const ArticleDetail: React.FC<Props> = ({ article }) => {
 
       <div css={Styles.header}>
         <h1 css={Styles.title}>{article.title}</h1>
+
         <div css={Styles.dateContainer}>
           <time css={Styles.date}>
             <BsPencilSquare css={Styles.dateIcon} />
@@ -33,6 +35,8 @@ const ArticleDetail: React.FC<Props> = ({ article }) => {
             </time>
           )}
         </div>
+
+        <AccountInfo uid={article.ownerUid} />
       </div>
 
       <div css={Styles.body} dangerouslySetInnerHTML={{ __html: innerHTML }} />

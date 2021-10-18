@@ -19,7 +19,6 @@ const inner = css`
 
 const info = css`
   padding: 1rem 0.5rem;
-  font-size: 0.8rem;
   word-break: break-all;
 `
 
@@ -27,6 +26,7 @@ const date = css`
   display: flex;
   align-items: center;
   gap: 0.4rem;
+  font-size: 0.8rem;
 `
 
 const dateIcon = css`
@@ -34,7 +34,7 @@ const dateIcon = css`
 `
 
 const title = css`
-  margin: 0 0 0.75rem;
+  margin: 0.5rem 0;
   font-size: 1.1rem;
   font-weight: normal;
 `
