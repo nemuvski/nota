@@ -159,3 +159,25 @@ export const updateArticle = async (
     throw new FirestoreError(error as FirebaseFirestoreError)
   }
 }
+
+/**
+ * Articleドキュメントを論理削除
+ *
+ * @param id
+ */
+export const deleteArticle = async (id: FirestoreDocumentId) => {
+  const currentTimestamp = serverTimestamp()
+  try {
+    await setDoc(
+      doc(collectionRef, id),
+      {
+        status: ArticleStatus.Removed,
+        updatedAt: currentTimestamp,
+      },
+      { merge: true }
+    )
+    return id
+  } catch (error) {
+    throw new FirestoreError(error as FirebaseFirestoreError)
+  }
+}

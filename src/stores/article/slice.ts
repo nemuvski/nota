@@ -1,6 +1,12 @@
 import { createEntityAdapter, createSlice, PayloadAction } from '@reduxjs/toolkit'
 import { Article } from '@/models/Article'
-import { addArticleAction, getMyArticleAction, getMyArticlesAction, updateArticleAction } from '@/stores/article/action'
+import {
+  addArticleAction,
+  deleteArticleAction,
+  getMyArticleAction,
+  getMyArticlesAction,
+  updateArticleAction,
+} from '@/stores/article/action'
 
 export const articleAdapter = createEntityAdapter<Article>({
   selectId: (article) => article.id,
@@ -35,6 +41,12 @@ export const articleSlice = createSlice({
     builder.addCase(updateArticleAction.fulfilled, (state, action) => {
       if (action.payload) {
         articleAdapter.upsertOne(state, action.payload)
+      }
+    })
+
+    builder.addCase(deleteArticleAction.fulfilled, (state, action) => {
+      if (action.payload) {
+        articleAdapter.removeOne(state, action.payload)
       }
     })
   },

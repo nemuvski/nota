@@ -1,6 +1,10 @@
 import type { NextPage } from 'next'
 import { useState } from 'react'
 import { useRouter } from 'next/router'
+import { useDispatch } from 'react-redux'
+import { AppDispatch } from '@/stores/store'
+import { deleteArticleAction } from '@/stores/article/action'
+import { useToast } from '@/hooks/toast'
 import { useMyArticle } from '@/hooks/article'
 import Layout from '@/components/Layout'
 import Loading from '@/components/Loading'
@@ -17,14 +21,17 @@ type QueryParams = {
 }
 
 const OwnArticleDetailPage: NextPage = () => {
+  const dispatch = useDispatch<AppDispatch>()
   const router = useRouter()
   const { docId } = router.query as QueryParams
 
+  const [isDeleteProcessing, setIsDeleteProcessing] = useState(false)
   const [isModalOpen, setIsModalOpen] = useState(false)
+  const { addToast } = useToast()
 
   const { isFetching, article } = useMyArticle(docId)
 
-  if (isFetching) {
+  if (isFetching || isDeleteProcessing) {
     return <Loading />
   } else if (!article) {
     return <NotFoundContent />
@@ -59,7 +66,26 @@ const OwnArticleDetailPage: NextPage = () => {
             <Button type='button' color='gray' onClick={() => setIsModalOpen(false)}>
               Cancel
             </Button>
-            <Button type='button' color='secondary'>
+            <Button
+              type='button'
+              color='secondary'
+              onClick={() => {
+                setIsDeleteProcessing(true)
+                dispatch(deleteArticleAction(docId))
+                  .unwrap()
+                  .then(() => {
+                    addToast('success', 'Successfully deleted the article')
+                  })
+                  .catch(() => {
+                    addToast('error', 'Failed to delete the article')
+                  })
+                  .finally(() => {
+                    setIsModalOpen(false)
+                    setIsDeleteProcessing(false)
+                    router.replace('/dashboard')
+                  })
+              }}
+            >
               Delete
             </Button>
           </ButtonList>
