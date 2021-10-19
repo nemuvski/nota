@@ -2,16 +2,19 @@ import React, { useState } from 'react'
 import { useSelector } from 'react-redux'
 import { selectMyArticles } from '@/stores/article/selector'
 import { ArticleStatus } from '@/models/Article'
-import { DASHBOARD_PAGE_NUM_ARTICLES } from '@/constants/article'
+import ArticleCard from '@/components/ArticleCard'
 import ButtonList from '@/styles/styled-components/button-list.component'
 import Button from '@/styles/styled-components/button.component'
 import ArticleCardContainer from '@/styles/styled-components/article-card-container.component'
-import ArticleCard from '@/components/ArticleCard'
 
-const DashboardArticleList = () => {
+type Props = {
+  numArticles?: number
+}
+
+const OwnArticleList: React.FC<Props> = ({ numArticles }) => {
   const [isPublishedMode, setIsPublishedMode] = useState(true)
-  const publishedArticles = useSelector(selectMyArticles(ArticleStatus.Published, DASHBOARD_PAGE_NUM_ARTICLES))
-  const draftArticles = useSelector(selectMyArticles(ArticleStatus.Draft, DASHBOARD_PAGE_NUM_ARTICLES))
+  const publishedArticles = useSelector(selectMyArticles(ArticleStatus.Published, numArticles))
+  const draftArticles = useSelector(selectMyArticles(ArticleStatus.Draft, numArticles))
 
   return (
     <div>
@@ -33,4 +36,4 @@ const DashboardArticleList = () => {
   )
 }
 
-export default DashboardArticleList
+export default OwnArticleList
