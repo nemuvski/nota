@@ -1,10 +1,32 @@
 import { useEffect, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { AppDispatch } from '@/stores/store'
-import { selectMyArticle } from '@/stores/article/selector'
+import { selectMyArticle, selectPublishedArticle } from '@/stores/article/selector'
 import { ArticleStatusType } from '@/models/Article'
-import { getMyArticleAction, getMyArticlesAction } from '@/stores/article/action'
+import { getMyArticleAction, getMyArticlesAction, getPublishedArticleAction } from '@/stores/article/action'
 import { selectMyAccount } from '@/stores/account/selector'
+
+export const usePublishedArticle = (docId: FirestoreDocumentId) => {
+  const dispatch = useDispatch<AppDispatch>()
+  const article = useSelector(selectPublishedArticle(docId))
+  const [isFetching, setIsFetching] = useState(false)
+
+  useEffect(() => {
+    if (article) {
+      return
+    }
+
+    const fetchPublishedArticle = async () => await dispatch(getPublishedArticleAction(docId)).unwrap()
+
+    setIsFetching(true)
+    fetchPublishedArticle().finally(() => setIsFetching(false))
+  }, [dispatch, docId, article])
+
+  return {
+    isFetching,
+    article,
+  }
+}
 
 /**
  * 所有するArticleを取得する

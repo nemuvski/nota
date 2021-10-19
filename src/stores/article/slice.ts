@@ -5,6 +5,7 @@ import {
   deleteArticleAction,
   getMyArticleAction,
   getMyArticlesAction,
+  getPublishedArticleAction,
   updateArticleAction,
 } from '@/stores/article/action'
 
@@ -22,6 +23,12 @@ export const articleSlice = createSlice({
     },
   },
   extraReducers: (builder) => {
+    builder.addCase(getPublishedArticleAction.fulfilled, (state, action) => {
+      if (action.payload) {
+        articleAdapter.upsertOne(state, action.payload)
+      }
+    })
+
     builder.addCase(getMyArticleAction.fulfilled, (state, action) => {
       if (action.payload) {
         articleAdapter.upsertOne(state, action.payload)

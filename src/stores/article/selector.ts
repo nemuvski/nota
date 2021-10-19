@@ -8,6 +8,20 @@ const articleState = (state: RootState) => state.article
 const { selectAll, selectById } = articleAdapter.getSelectors()
 
 /**
+ * ストアから指定した公開済のArticleを取得
+ *
+ * @param docId
+ */
+export const selectPublishedArticle = (docId: FirestoreDocumentId) =>
+  createSelector(articleState, (state) => {
+    const targetArticle = selectById(state, docId)
+    if (targetArticle && targetArticle.status === ArticleStatus.Published) {
+      return targetArticle
+    }
+    return undefined
+  })
+
+/**
  * ストアから自身の所有するArticleを取得
  *
  * @param docId
