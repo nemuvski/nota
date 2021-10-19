@@ -86,20 +86,22 @@ const SetThumbnail: React.FC<Props> = ({ thumbnailUrl, uploadingImageData, setUp
     [selectedFile, cropImage, setUploadingImageData]
   )
 
+  const imageUrl = useMemo(() => {
+    if (uploadingImageData) {
+      return URL.createObjectURL(uploadingImageData)
+    }
+    return thumbnailUrl
+  }, [thumbnailUrl, uploadingImageData])
+
   return (
     <>
       <div css={Styles.root}>
         {(thumbnailUrl || uploadingImageData) && (
           <div css={Styles.imageWrapper}>
-            <img src={thumbnailUrl ?? URL.createObjectURL(uploadingImageData)} alt='Thumbnail Image' />
+            <img src={imageUrl} alt='Thumbnail Image' />
           </div>
         )}
         <div css={[Styles.actions, (thumbnailUrl || uploadingImageData) && Styles.actionsVariant]}>
-          {thumbnailUrl && uploadingImageData && (
-            <Button type='button' color='secondary'>
-              Remove
-            </Button>
-          )}
           {uploadingImageData && (
             <Button type='button' color='gray' onClick={() => setUploadingImageData(undefined)}>
               Clear
