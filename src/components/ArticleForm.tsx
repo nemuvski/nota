@@ -155,7 +155,7 @@ const ArticleForm: React.FC<Props> = ({ article }) => {
             disabled={isSubmitting}
             onClick={() => {
               router.replace(
-                article ? { pathname: '/own/articles/[docId]', query: { docId: article.id } } : '/dashboard'
+                article ? { pathname: '/own/articles/[docId]', query: { docId: article.id } } : '/own/articles'
               )
             }}
           >
