@@ -1,7 +1,5 @@
 # Web App: Nota 📝
 
-👷🚧 ただいま工事中です。更新されていきます。
-
 ## 🧳 実行する前に
 
 Firebaseで以下の準備をする。
@@ -29,6 +27,12 @@ yarn deploy:firestore:indexes
 yarn deploy:storage:rules
 ```
 
+## 🚗💨 ローカル環境での実行
+
+```bash
+yarn dev
+```
+
 ## 🧪 テスト
 
 Firestoreのセキュリティルールのテストを実行する。
@@ -38,4 +42,11 @@ Firestoreのセキュリティルールのテストを実行する。
 ```bash
 # Firestoreエミュレーターを導入
 firebase setup:emulators:firestore
+```
+
+### テストコマンド
+
+```bash
+yarn test:firestore:account
+yarn test:firestore:article
 ```
