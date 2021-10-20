@@ -6,6 +6,7 @@ import {
   getMyArticle,
   getMyArticles,
   getPublishedArticle,
+  getPublishedArticles,
   updateArticle,
 } from '@/infrastructure/article'
 import { ArticleStatusType } from '@/models/Article'
@@ -32,6 +33,13 @@ export const getPublishedArticleAction = createAsyncThunk(
   'article/getPublishedArticle',
   async (id: FirestoreDocumentId) => {
     return await getPublishedArticle(id)
+  }
+)
+
+export const getPublishedArticlesAction = createAsyncThunk(
+  'article/getPublishedArticles',
+  async (lineNumber?: number) => {
+    return await getPublishedArticles(lineNumber)
   }
 )
 

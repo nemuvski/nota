@@ -22,7 +22,7 @@ import { jsonStringify } from '@/utils/json'
 const collectionRef = collection(firestore, PREFIX_COLLECTION_PATH, 'Article')
 
 /**
- * 公開されているArticleドキュメントを取得
+ * 公開済Articleドキュメントを取得
  *
  * @param id
  */
@@ -35,6 +35,25 @@ export const getPublishedArticle = async (id: FirestoreDocumentId) => {
     // 必然的に1つになる
     const fetchedDoc = snapshot.docs[0]
     return buildArticle(fetchedDoc.id, fetchedDoc.data())
+  } catch (error) {
+    throw new FirestoreError(error as FirebaseFirestoreError)
+  }
+}
+
+/**
+ * 公開済Articleドキュメント群を取得
+ *
+ * @param limitNumber
+ */
+export const getPublishedArticles = async (limitNumber?: number) => {
+  try {
+    let q = query(collectionRef, orderBy('updatedAt', 'desc'), where('status', '==', ArticleStatus.Published))
+    // 上限数が指定されている場合は設定
+    if (limitNumber && limitNumber > 0) {
+      q = query(q, limit(limitNumber))
+    }
+    const snapshot = await getDocs(q)
+    return snapshot.docs.map((fetchedDoc) => buildArticle(fetchedDoc.id, fetchedDoc.data()))
   } catch (error) {
     throw new FirestoreError(error as FirebaseFirestoreError)
   }

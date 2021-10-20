@@ -22,3 +22,8 @@ export const INITIAL_BODY_CONTENT: RawDraftContentState = {
  * ダッシュボードページで表示する記事数
  */
 export const DASHBOARD_PAGE_NUM_ARTICLES = 6
+
+/**
+ * フロントページで表示する記事数
+ */
+export const FRONT_PAGE_NUM_ARTICLES = 12

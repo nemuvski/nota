@@ -22,6 +22,23 @@ export const selectPublishedArticle = (docId: FirestoreDocumentId) =>
   })
 
 /**
+ * ストアから交際済のArticle群を取得
+ *
+ * @param size
+ */
+export const selectPublishedArticles = (size?: number) =>
+  createSelector(articleState, (state) => {
+    const targetArticles = selectAll(state).filter((article) => article.status === ArticleStatus.Published)
+
+    // サイズが指定されている場合は個数を制限する
+    if (size && size > 0) {
+      return targetArticles.slice(0, size)
+    }
+
+    return targetArticles
+  })
+
+/**
  * ストアから自身の所有するArticleを取得
  *
  * @param docId

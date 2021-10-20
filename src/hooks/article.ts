@@ -3,9 +3,19 @@ import { useDispatch, useSelector } from 'react-redux'
 import { AppDispatch } from '@/stores/store'
 import { selectMyArticle, selectPublishedArticle } from '@/stores/article/selector'
 import { ArticleStatusType } from '@/models/Article'
-import { getMyArticleAction, getMyArticlesAction, getPublishedArticleAction } from '@/stores/article/action'
+import {
+  getMyArticleAction,
+  getMyArticlesAction,
+  getPublishedArticleAction,
+  getPublishedArticlesAction,
+} from '@/stores/article/action'
 import { selectMyAccount } from '@/stores/account/selector'
 
+/**
+ *  公開済Articleを取得する
+ *
+ * @param docId
+ */
 export const usePublishedArticle = (docId: FirestoreDocumentId) => {
   const dispatch = useDispatch<AppDispatch>()
   const article = useSelector(selectPublishedArticle(docId))
@@ -26,6 +36,25 @@ export const usePublishedArticle = (docId: FirestoreDocumentId) => {
     isFetching,
     article,
   }
+}
+
+/**
+ * 公開済Article群を取得する
+ *
+ * @param size
+ */
+export const useFetchPublishedArticles = (size?: number) => {
+  const dispatch = useDispatch<AppDispatch>()
+  const [isFetching, setIsFetching] = useState(true)
+
+  useEffect(() => {
+    const fetchPublishedArticles = async () => await dispatch(getPublishedArticlesAction(size)).unwrap()
+
+    setIsFetching(true)
+    fetchPublishedArticles().finally(() => setIsFetching(false))
+  }, [dispatch, size])
+
+  return { isFetching }
 }
 
 /**

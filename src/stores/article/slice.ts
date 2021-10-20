@@ -6,6 +6,7 @@ import {
   getMyArticleAction,
   getMyArticlesAction,
   getPublishedArticleAction,
+  getPublishedArticlesAction,
   updateArticleAction,
 } from '@/stores/article/action'
 
@@ -27,6 +28,10 @@ export const articleSlice = createSlice({
       if (action.payload) {
         articleAdapter.upsertOne(state, action.payload)
       }
+    })
+
+    builder.addCase(getPublishedArticlesAction.fulfilled, (state, action) => {
+      articleAdapter.upsertMany(state, action.payload)
     })
 
     builder.addCase(getMyArticleAction.fulfilled, (state, action) => {
