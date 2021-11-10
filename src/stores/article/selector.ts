@@ -22,7 +22,7 @@ export const selectPublishedArticle = (docId: FirestoreDocumentId) =>
   })
 
 /**
- * ストアから交際済のArticle群を取得
+ * ストアから公開済のArticle群を取得
  *
  * @param size
  */
