@@ -19,9 +19,9 @@
     "deploy:storage:rules": "firebase deploy --only storage:rules"
   },
   "dependencies": {
-    "@emotion/react": "^11.7.0",
+    "@emotion/react": "^11.7.1",
     "@emotion/styled": "^11.6.0",
-    "@reduxjs/toolkit": "^1.7.0",
+    "@reduxjs/toolkit": "^1.7.1",
     "dayjs": "^1.10.7",
     "draft-convert": "^2.1.12",
     "draft-js": "^0.11.7",
@@ -33,27 +33,27 @@
     "react-dom": "17.0.2",
     "react-dropzone": "^11.4.2",
     "react-easy-crop": "^4.0.1",
-    "react-hook-form": "^7.21.2",
+    "react-hook-form": "^7.22.5",
     "react-icons": "^4.3.1",
     "react-redux": "^7.2.6"
   },
   "devDependencies": {
-    "@emotion/babel-plugin": "^11.3.0",
+    "@emotion/babel-plugin": "^11.7.2",
     "@firebase/rules-unit-testing": "^2.0.1",
     "@next/bundle-analyzer": "^12.0.7",
     "@types/draft-convert": "^2.1.4",
-    "@types/draft-js": "^0.11.7",
+    "@types/draft-js": "^0.11.8",
     "@types/jest": "^27.0.3",
-    "@types/react": "17.0.37",
+    "@types/react": "17.0.38",
     "@types/react-dom": "^17.0.11",
-    "@types/react-redux": "^7.1.20",
+    "@types/react-redux": "^7.1.21",
     "babel-plugin-transform-remove-console": "^6.9.4",
-    "eslint": "8.4.1",
+    "eslint": "8.5.0",
     "eslint-config-next": "12.0.7",
     "eslint-config-prettier": "^8.3.0",
-    "jest": "^27.4.4",
+    "jest": "^27.4.5",
     "prettier": "^2.5.1",
-    "ts-jest": "^27.1.1",
-    "typescript": "4.5.3"
+    "ts-jest": "^27.1.2",
+    "typescript": "4.5.4"
   }
 }
